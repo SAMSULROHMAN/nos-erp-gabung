@@ -47,17 +47,10 @@ Route::get('/batalpemesananPembelian', 'PagesController@batalPembelian');
 
 //Route::resource('/pesanpembelian', 'PemesanPembelianController');
 
-Route::get('/penerimaanBarang', 'PagesController@penerimaanBarang');
-Route::get('/konfirmasipenerimaanBarang', 'PagesController@konfirmasipenerimaanBarang');
-Route::get('/returnPenerimaanBarang', 'PagesController@returnPenerimaanBarang');
-Route::get('/konfirmasireturnPenerimaanBarang', 'PagesController@konfirmasiReturnPenerimaanBarang');
-
 //route Penjualan
 //route pemesanan penjualan
 Route::get('/pemesananPenjualan', 'PemesananPenjualan@index');
 Route::get('/pemesananPenjualan/create','PemesananPenjualan@create');
-
-
 Route::get('/batalpemesananPenjualan', 'PagesController@batalPenjualan');
 
 //route surat jalan
@@ -161,17 +154,65 @@ Route::get('/datakaryawan/show', 'KaryawanController@show');
 Route::post('/datakaryawan/update/{id}', 'KaryawanController@update');
 Route::get('/datakaryawan/destroy/{id}', 'KaryawanController@destroy');
 
-//ROUTE PEMBELIAN
+//Pembelian route
 // route pemesananpembelian
 Route::get('/popembelian', 'PemesananPembelianController@index');
-Route::get('/pokonfirmasi', 'PemesananPembelianKonfirmasiController@index');
-Route::get('/poditerima', 'PemesananPembelianDiterimaController@index');
-Route::get('/pobatal', 'PemesananPembelianBatalController@index');
+Route::get('/pokonfirmasi', 'PemesananPembelianController@konfirmasiPembelian');
+Route::get('/poditerima', 'PemesananPembelianController@diterimaPembelian');
+Route::get('/pobatal', 'PemesananPembelianController@batalPembelian');
 
 //route PO
 Route::get('/popembelian/store', 'PemesananPembelianController@store');
 Route::get('/popembelian/create', 'PemesananPembelianController@create');
+Route::get('/popembelian/show/{id}', 'PemesananPembelianController@show');
+Route::get('/popembelian/lihat/{id}', 'PemesananPembelianController@lihat');
 Route::get('/popembelian/destroy/{id}', 'PemesananPembelianController@destroy');
+Route::post('/popembelian/confirm/{id}', 'PemesananPembelianController@confirm');
+Route::post('/popembelian/cancel/{id}', 'PemesananPembelianController@cancel');
+Route::post('/popembelian/print/{id}','PemesananPembelianController@print');
+Route::get('api/popembelianOPN', 'PemesananPembelianController@apiOPN')->name('api.popembelianOPN');
+Route::get('api/popembelianCFM', 'PemesananPembelianController@apiCFM')->name('api.popembelianCFM');
+Route::get('api/popembelianDEL', 'PemesananPembelianController@apiDEL')->name('api.popembelianDEL');
+Route::get('api/popembelianCLS', 'PemesananPembelianController@apiCLS')->name('api.popembelianCLS');
+
+//route penerimaan barang
+Route::get('/penerimaanBarang', 'PenerimaanBarangController@index');
+Route::get('/penerimaanBarang/create/{id}', 'PenerimaanBarangController@create');
+Route::post('/penerimaanBarang/store/{id}', 'PenerimaanBarangController@store');
+Route::get('/penerimaanBarang/show/{id}', 'PenerimaanBarangController@show');
+Route::get('/penerimaanBarang/lihat/{id}', 'PenerimaanBarangController@lihat');
+Route::post('/penerimaanBarang/confirm/{id}', 'PenerimaanBarangController@confirm');
+Route::post('/penerimaanBarang/cancel/{id}', 'PenerimaanBarangController@cancel');
+Route::post('/penerimaanBarang/print/{id}','PenerimaanBarangController@print');
+Route::get('/konfirmasiPenerimaanBarang', 'PenerimaanBarangController@konfirmasiPenerimaanBarang');
+Route::get('/batalPenerimaanBarang', 'PenerimaanBarangController@batalPenerimaanBarang');
+Route::get('api/penerimaanbarangOPN', 'PenerimaanBarangController@apiOPN')->name('api.penerimaanbarangOPN');
+Route::get('api/penerimaanbarangCFM', 'PenerimaanBarangController@apiCFM')->name('api.penerimaanbarangCFM');
+Route::get('api/penerimaanbarangDEL', 'PenerimaanBarangController@apiDEL')->name('api.penerimaanbarangDEL');
+
+//route return penerimaan barang
+Route::get('/returnPenerimaanBarang', 'ReturnPenerimaanBarangController@index');
+Route::get('/returnPenerimaanBarang/create/{id}', 'ReturnPenerimaanBarangController@create');
+Route::post('/returnPenerimaanBarang/store/{id}', 'ReturnPenerimaanBarangController@store');
+Route::get('/returnPenerimaanBarang/show/{id}', 'ReturnPenerimaanBarangController@show');
+Route::get('/returnPenerimaanBarang/lihat/{id}', 'ReturnPenerimaanBarangController@lihat');
+Route::post('/returnPenerimaanBarang/print/{id}','ReturnPenerimaanBarangController@print');
+Route::post('/returnPenerimaanBarang/confirm/{id}', 'ReturnPenerimaanBarangController@confirm');
+Route::post('/returnPenerimaanBarang/cancel/{id}', 'ReturnPenerimaanBarangController@cancel');
+Route::get('/konfirmasiReturnPenerimaanBarang', 'ReturnPenerimaanBarangController@konfirmasi');
+Route::get('/batalReturnPenerimaanBarang', 'ReturnPenerimaanBarangController@batal');
+Route::get('api/returnpenerimaanbarangOPN', 'ReturnPenerimaanBarangController@apiOPN')->name('api.returnpenerimaanbarangOPN');
+Route::get('api/returnpenerimaanbarangCFM', 'ReturnPenerimaanBarangController@apiCFM')->name('api.returnpenerimaanbarangCFM');
+Route::get('api/returnpenerimaanbarangDEL', 'ReturnPenerimaanBarangController@apiDEL')->name('api.returnpenerimaanbarangDEL');
+
+//route pelunasan hutang
+Route::get('/invoicehutang', 'InvoiceController@hutang');
+Route::get('/fixinvoicehutang', 'PenerimaanBarangController@fixInvoiceID');
+Route::get('/pelunasanhutang', 'PelunasanHutangController@index');
+Route::get('/pelunasanhutang/invoice/{id}', 'PelunasanHutangController@invoice');
+Route::get('/pelunasanhutang/payment/{id}', 'PelunasanHutangController@payment');
+Route::get('/pelunasanhutang/payment/{id}/add', 'PelunasanHutangController@addpayment');
+Route::post('/pelunasanhutang/payment/{id}/add', 'PelunasanHutangController@addpaymentpost');
 
 // route pemesananpenjualan
 Route::get('/sopenjualan', 'PemesananPenjualanController@index');
