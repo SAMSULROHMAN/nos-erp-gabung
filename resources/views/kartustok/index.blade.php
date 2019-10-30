@@ -66,10 +66,7 @@
                                     <th>Jenis Transaksi</th>
                                     <th>Kode Transaksi</th>
                                     <th>QTY</th>
-                                    <th>Average Price</th>
-                                    <th>ID User</th>
-                                    <th>idx</th>
-                                    <th>indexmov</th>
+                                    <th>User</th>
                                     <th>Saldo</th>
                                 </tr>
                             </thead>
@@ -82,10 +79,7 @@
                                         <td>{{ $stokmasuk->JenisTransaksi }}</td>
                                         <td>{{ $stokmasuk->KodeTransaksi}}</td>
                                         <td>{{ $stokmasuk->Qty}}</td>
-                                        <td>{{ $stokmasuk->HargaRata}}</td>
                                         <td>{{ $stokmasuk->KodeUser}}</td>
-                                        <td>{{ $stokmasuk->idx }}</td>
-                                        <td>{{ $stokmasuk->indexmov}}</td>
                                         <td>{{ $stokmasuk->saldo}}</td>
                                     </tr>
                                 @endforeach
