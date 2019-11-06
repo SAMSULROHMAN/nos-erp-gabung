@@ -29,7 +29,7 @@
                     <h3>{{$id}}</h3>
                 </div>
                 <div class="x_content">
-                    <form action="/sopenjualan/update/{{$id}}" class="formsub" method="post">
+                    <form action="{{ url('/sopenjualan/update',$id)}}" class="formsub" method="post">
                         @csrf
 
                         <!-- Contents -->
@@ -67,12 +67,12 @@
                                     <label for="inputMatauang">Mata Uang</label>
                                     <select class="form-control" required="required" name="KodeMataUang" id="inputMatauang" placeholder="Pilih mata uang">
                                         @foreach($matauang as $mu)
-                                            @if($data->KodeMataUang == $mu->KodeMataUang) 
+                                            @if($data->KodeMataUang == $mu->KodeMataUang)
                                                 <option value="{{$mu->KodeMataUang}}" selected="">{{$mu->NamaMataUang}}</option>
                                             @else
                                                 <option value="{{$mu->KodeMataUang}}">{{$mu->NamaMataUang}}</option>
                                             @endif
-                                        
+
                                         @endforeach
                                     </select>
                                 </div>
@@ -80,12 +80,12 @@
                                     <label for="inputGudang">Gudang</label>
                                     <select class="form-control" required="required" name="KodeLokasi" id="inputGudang">
                                         @foreach($lokasi as $lok)
-                                            @if($data->KodeLokasi == $lok->KodeLokasi) 
+                                            @if($data->KodeLokasi == $lok->KodeLokasi)
                                                 <option value="{{$lok->KodeLokasi}}" selected="" >{{$lok->NamaLokasi}}</option>
                                             @else
                                                 <option value="{{$lok->KodeLokasi}}">{{$lok->NamaLokasi}}</option>
                                             @endif
-                                        
+
                                         @endforeach
                                     </select>
                                 </div>
@@ -93,14 +93,14 @@
                                     <label for="inputPelanggan">Pelanggan</label>
                                     <select class="form-control" name="KodePelanggan" id="inputPelanggan">
                                         @foreach($pelanggan as $pel)
-                                            @if($data->KodePelanggan == $pel->KodePelanggan) 
+                                            @if($data->KodePelanggan == $pel->KodePelanggan)
                                                 <option value="{{$pel->KodePelanggan}}" selected="">{{$pel->NamaPelanggan}}</option>
                                             @else
                                                 <option value="{{$pel->KodePelanggan}}">{{$pel->NamaPelanggan}}</option>
                                             @endif
                                         @endforeach
                                     </select>
-                                    
+
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPelanggan">Diskon</label>
@@ -116,9 +116,9 @@
                                             <option value="ya">Ya</option>
                                             <option selected="" value="tidak">Tidak</option>
                                         @endif
-                                        
+
                                     </select>
-                                        
+
                                 </div>
                             </div>
                             <!-- pembatas -->
@@ -128,7 +128,7 @@
                                 <label for="inputKeterangan">Keterangan</label>
                                 <textarea class="form-control" name="Keterangan" id="inputKeterangan" rows="5">{{$data->Keterangan}}</textarea>
                                 <br><br>
-                                
+
                             </div>
                         </div>
                         <div class="form-row">
@@ -168,7 +168,7 @@
                                                     @endif
                                                 @endforeach
                                             </select>
-                                            
+
                                         </td>
                                         <td>
                                             <input type="number" onchange="qty({{$a+1}})" class="form-control qty{{$a+1}}" name="qty[]" required="" value="{{$item->Qty}}">
@@ -190,7 +190,7 @@
                                         @else
                                             <td><i onclick="del({{$a+1}})" class="fa fa-trash"></i></td>
                                         @endif
-                                        
+
                                     </tr>
                                     @endforeach
                                 </table>
@@ -248,7 +248,7 @@
         res = res.replace("satuan1", "satuan"+count);
         res = res.replace("keterangan1", "keterangan"+count);
         res = res.replace("<td></td>", '<td><i onclick="del('+count+')" class="fa fa-trash"></i></td>');
-        
+
         $("#items tbody").append(res);
         var item =$(".item"+count).val();
         var sat =$("#"+item+"Sat").val();
@@ -333,9 +333,9 @@
                     $(".qty"+i).focus();
                 }
             }
-            
+
         }
-        
+
     });
 </script>
 @endsection

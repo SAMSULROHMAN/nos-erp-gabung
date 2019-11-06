@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\lokasi;
+use App\Model\lokasi;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Input;
 
 class DataGudangController extends Controller
 {
@@ -14,27 +14,26 @@ class DataGudangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $lokasi = DB::table('lokasis')->get();
-        // return view('master.dataGudang', ['lokasi' => $lokasi]);
-        $lokasi = lokasi::where('Status','OPN')->get();
+        // untuk menampilkan data gudang
+        $lokasi = lokasi::where('Status','OPN')->paginate(5);
+        // logika untuk pencarian data
+        // butuh logika enkapsulasi dan abstraksi
+
+        /***
+            langkah langkah
+            1.definisikan request data yang ingin direquest
+            2.gunakan Eloquent , Query Builder, atau SQL Syntax untuk melakukan logika pencarian
+        **/
+        $search = $request->get('keyword');
+        if($search){
+          $lokasi = lokasi::where('NamaLokasi','LIKE',"%$search%")
+          ->orWhere('KodeLokasi','LIKE',"%$search%")
+          ->orWhere('Tipe','LIKE',"%$search%")
+          ->paginate(5);
+        }
         return view('master.dataGudang',['lokasi' => $lokasi]);
-        //return view('master.dataGudang');
-
-        // $lokasi = lokasi::all();
-        // return view('master.dataGudang', compact('lokasi', $lokasi));
-    }
-
-    function getdata(){
-        // $lokasi = DB::table('lokasis')->select('KodeLokasi','NamaLokasi','Tipe');
-        $lokasi = lokasi::select('KodeGudang','NamaGudang','Tipe');
-        return DataTables::of($lokasi)
-        // ->addColumn('action', function($lokasi){
-        //     return '<a href="#" class="btn btn-xs btn-primary edit" id="'.$lokasi->KodeGudang.'"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-        //     <a href="#" class="btn btn-xs btn-danger delete" id="'.$lokasi->KodeGudang.'"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
-        // })
-        ->make(true);
     }
 
     /**
@@ -172,6 +171,9 @@ class DataGudangController extends Controller
         // return redirect('/datagudang');
     }
 
-    public function filter()
-    { }
+    public function filterData(Request $request)
+    {
+
+        return $lokasi;
+    }
 }
