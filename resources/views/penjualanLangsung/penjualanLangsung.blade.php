@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-12">
 
-          <div class="x_panel">
+          <!-- <div class="x_panel">
               <div class="x_title">
                 <h3>Filter Tanggal</h3>
               </div>
@@ -42,19 +42,18 @@
                   </div>
                 </div>
               </form>
-          </div>
+          </div> -->
 
           <div class="x_panel">
               <div class="x_title">
                 <div class="row">
                   <div class="col-md-6 col-sm-6">
-                    <h3>Pemesanan Penjualan</h3>
-                    <p>Sales Order<p>
+                    <h3>Penjualan Langsung</h3>
                   </div>
                   <div class="col-md-6 col-sm-6">
-                    <a href="{{ url('/sopenjualan/create')}}" class="btn btn-success pull-right">
+                    <!-- <a href="{{ url('/sopenjualan/create')}}" class="btn btn-success pull-right">
                       <i class="fa fa-plus" aria-hidden="true"></i>Tambah S.O.
-                    </a>
+                    </a> -->
                   </div>
                 </div>
               </div>
@@ -62,38 +61,20 @@
               <table class="table table-light" id="table">
                 <thead class="thead-light">
                   <tr>
-                    <th>Kode SO</th>
+                    <th>Kode Penjualan</th>
                     <th>Tanggal</th>
-                    <th>Tanggal Kirim</th>
-                    <th>Expired</th>
-                    <th>Mata Uang</th>
                     <th>Gudang</th>
+                    <th>MataUang</th>
                     <th>Pelanggan</th>
-                    <th>Term</th>
-                    <th>Aksi</th>
                   </tr>
                 </thead>
-                  @foreach ($pemesananpenjualan as $p)
+                  @foreach ($penjualanlangsung as $p)
                     <tr>
-                        <td>{{ $p->KodeSO}}</td>
+                        <td>{{ $p->KodePenjualanLangsung }}</td>
                         <td>{{ \Carbon\Carbon::parse($p->Tanggal)->format('d-m-Y') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($p->tgl_kirim)->format('d-m-Y') }}</td>
-                        <td>{{ $p->Expired }}</td>
-                        <td>{{ $p->KodeMataUang}}</td>
-                        <td>{{ $p->KodeLokasi}}</td>
-                        <td>{{ $p->KodePelanggan}}</td>
-                        <td>{{ $p->term }}</td>
-                        <td>
-                          <a href="{{ url('/sopenjualan/show/'. $p->KodeSO )}}" class="btn-sm btn btn-primary">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                          </a>
-                          <a href="{{ url('/sopenjualan/edit/'.$p->KodeSO)}}" class="btn-sm btn btn-warning">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                          </a>
-                          <a href="{{ url('/sopenjualan/destroy/'.$p->KodeSO)}}" class="btn-sm btn btn-danger">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                          </a>
-                        </td>
+                        <td>{{ $p->NamaLokasi }}</td>
+                        <td>{{ $p->NamaMataUang }}</td>
+                        <td>{{ $p->NamaPelanggan }}</td>
                     </tr>
                   @endforeach
               </table>
@@ -106,16 +87,6 @@
 @section('scripts')
 
 <script type="text/javascript">
-    $('#tanggalpo').datetimepicker({
-      defaultDate: new Date(),
-      format: 'DD-MM-YYYY'
-    });
-
-    $('#tanggalposampai').datetimepicker({
-      defaultDate: new Date(),
-      format: 'DD-MM-YYYY'
-    });
-
     $('#table').DataTable();
 </script>
 

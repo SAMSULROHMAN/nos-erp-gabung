@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
+use App\Model\penjualanLangsung;
 
 class PenjualanLangsungController extends Controller
 {
@@ -11,8 +12,8 @@ class PenjualanLangsungController extends Controller
         $matauang = DB::table('matauangs')->get();
         $lokasi = DB::table('lokasis')->get();
         $pelanggan = DB::table('pelanggans')->get();
-        $item = DB::select("SELECT s.KodeItem, s.NamaItem, k.HargaJual, t.NamaSatuan, s.Keterangan FROM items s 
-            inner join itemkonversis k on k.KodeItem = s.KodeItem 
+        $item = DB::select("SELECT s.KodeItem, s.NamaItem, k.HargaJual, t.NamaSatuan, s.Keterangan FROM items s
+            inner join itemkonversis k on k.KodeItem = s.KodeItem
             inner join satuans t on k.KodeSatuan = t.KodeSatuan where s.jenisitem='bahanbaku' ");
         $last_id = DB::select('SELECT * FROM penjualanlangsungs ORDER BY KodePenjualanLangsung DESC LIMIT 1');
 
@@ -37,7 +38,7 @@ class PenjualanLangsungController extends Controller
                 $newID = str_pad($newID, 4, '0', STR_PAD_LEFT);
             }
             $newID = "DJB-" . $year_now . $month_now . $newID;
-            
+
         }
         return view('penjualanLangsung.add', [
             'newID' => $newID,
@@ -89,8 +90,19 @@ class PenjualanLangsungController extends Controller
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
             ]);
-            
+
         }
         return redirect('/penjualanLangsung');
+    }
+
+    public function retriveData()
+    {
+        $penjualanlangsung = DB::table('penjualanlangsungs')
+        ->join('matauangs','penjualanlangsungs.KodeMataUang','=','matauangs.KodeMataUang')
+        ->join('lokasis','penjualanlangsungs.KodeLokasi','=','lokasis.KodeLokasi')
+        ->join('pelanggans','penjualanlangsungs.KodePelanggan','=','pelanggans.KodePelanggan')
+        ->select('penjualanlangsungs.*','matauangs.NamaMataUang','lokasis.NamaLokasi','pelanggans.NamaPelanggan')
+        ->get();
+        return view('penjualanLangsung.penjualanLangsung',compact('penjualanlangsung'));
     }
 }

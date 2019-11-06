@@ -1,58 +1,47 @@
 @extends('index')
 @section('content')
-<style>
-    .btn {
-      background-color: DodgerBlue;
-      border: none;
-      color: white;
-      padding: 12px 16px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    /* Darker background on mouse-over */
-    .btn:hover {
-      background-color: RoyalBlue;
-    }
-    </style>
- <div class="container">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Return Surat Jalan</h1>
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <form>
-          <!-- <button class="btn btn-success">
-                    <i class="fas fa-plus">&nbsp;&nbsp;Tambah Data P.O</i>
-          </button>-->
-
-          <!-- Contents -->
-          <br>
-          <div class="form-row">
-            <!-- column 1 -->
-            <div class="">
-              <input
-                class="form-control form-control-navbar"
-                type="search"
-                placeholder="Cari Nomor S.O"
-                aria-label="Search"
-              >
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+              <h3>Filter Tanggal</h3>
             </div>
+            <div class="x_content">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="tanggalpo">Dari :</label>
+                    <div class="input-group date" id="tanggalpo">
+                        <input type="text" class="form-control"/>
+                        <span class="input-group-addon">
+                           <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="tanggalpo">Sampai :</label>
+                    <div class="input-group date" id="tanggalposampai">
+                        <input type="text" class="form-control"/>
+                        <span class="input-group-addon">
+                           <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>Return Surat Jalan</h3>
           </div>
-          <hr class="style1">
-          <div class="form-row">
-            <table class="table table-bordered">
-              <thead>
+          <div class="x_content">
+            <table class="table table-light" id="treturnsuratjalan">
+              <thead class="thead-light">
                 <tr>
                   <th scope="col">Nomor RSJ</th>
                   <th scope="col">Tanggal</th>
@@ -80,12 +69,25 @@
               </tbody>
             </table>
           </div>
-        </form>
+        </div>
       </div>
     </div>
-    <!-- Button trigger modal -->
+</div>
+@endsection
+@section('scripts')
 
+<script type="text/javascript">
+    $('#tanggalpo').datetimepicker({
+      defaultDate: new Date(),
+      format: 'DD/MM/YYYY'
+    });
 
-    </div>
-  </div>
+    $('#tanggalposampai').datetimepicker({
+      defaultDate: new Date(),
+      format: 'DD/MM/YYY'
+    });
+
+    $('#treturnsuratjalan').DataTable();
+</script>
+
 @endsection

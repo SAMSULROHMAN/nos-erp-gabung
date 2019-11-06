@@ -14,8 +14,8 @@ class AddPrimaryReturnPenjulanDetail extends Migration
     public function up()
     {
         Schema::table('penjualanlangsungreturndetails', function (Blueprint $table) {
-            $table->bigIncrements('KodePenjualanLangsungReturnDetailID');
-            
+            $table->increments('KodePenjualanLangsungReturnDetailID');
+
         });
     }
 

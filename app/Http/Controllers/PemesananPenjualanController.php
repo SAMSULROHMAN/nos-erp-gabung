@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\pemesananpenjualan;
-use App\pemesananpembelian;
-use App\lokasi;
-use App\matauang;
-use App\pelanggan;
-use App\item;
+use App\Model\pemesananpenjualan;
+use App\Model\pemesananpembelian;
+use App\Model\lokasi;
+use App\Model\matauang;
+use App\Model\pelanggan;
+use App\Model\item;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -20,10 +20,17 @@ class PemesananPenjualanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pemesananpenjualan =pemesananpenjualan::all()->where('Status','OPN');
-        return view('pemesananPenjualan.pemesananPenjualan',['pemesananpenjualan' => $pemesananpenjualan]);
+        $pemesananpenjualan = DB::table('pemesananpenjualans')->where('Status','OPN')->get();
+        return view('pemesananPenjualan.pemesananPenjualan',compact('pemesananpenjualan'));
+    }
+
+    public function filterData(Request $request)
+    {
+        $pemesananpenjualan = pemesananpenjualan::whereBetween('Tanggal',
+        [$request->start,$request->end])->get();
+        return redirect('/sopenjualan');
     }
 
     /**
@@ -37,8 +44,8 @@ class PemesananPenjualanController extends Controller
         $matauang = DB::table('matauangs')->get();
         $lokasi = DB::table('lokasis')->get();
         $pelanggan = DB::table('pelanggans')->get();
-        $item = DB::select("SELECT s.KodeItem, s.NamaItem, k.HargaJual, t.NamaSatuan, s.Keterangan FROM items s 
-            inner join itemkonversis k on k.KodeItem = s.KodeItem 
+        $item = DB::select("SELECT s.KodeItem, s.NamaItem, k.HargaJual, t.NamaSatuan, s.Keterangan FROM items s
+            inner join itemkonversis k on k.KodeItem = s.KodeItem
             inner join satuans t on k.KodeSatuan = t.KodeSatuan where s.jenisitem='bahanbaku' ");
         $last_id = DB::select('SELECT * FROM pemesananpenjualans ORDER BY KodeSO DESC LIMIT 1');
 
@@ -65,7 +72,7 @@ class PemesananPenjualanController extends Controller
             }
             $newIDP = "SOT-" . $year_now . $month_now . $newID;
             $newID = "SO-" . $year_now . $month_now . $newID;
-            
+
         }
 
         return view('pemesananPenjualan.buatPenjualan', [
@@ -86,7 +93,7 @@ class PemesananPenjualanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
 
 
         $this->validate($request, [
@@ -140,7 +147,7 @@ class PemesananPenjualanController extends Controller
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
             ]);
-            
+
         }
         return redirect('/sopenjualan');
     }
@@ -152,15 +159,15 @@ class PemesananPenjualanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
-        $data = DB::select("SELECT a.KodeSo, a.Tanggal, a.tgl_kirim,a.Expired,a.term, a.POPelanggan, b.NamaMataUang, c.NamaLokasi, d.NamaPelanggan, a.Keterangan, a.Diskon, a.PPN, a.Subtotal, a.NilaiPPN from pemesananpenjualans a 
+    {
+        $data = DB::select("SELECT a.KodeSo, a.Tanggal, a.tgl_kirim,a.Expired,a.term, a.POPelanggan, b.NamaMataUang, c.NamaLokasi, d.NamaPelanggan, a.Keterangan, a.Diskon, a.PPN, a.Subtotal, a.NilaiPPN from pemesananpenjualans a
             inner join matauangs b on b.KodeMataUang = a.KodeMataUang
             inner join lokasis c on c.KodeLokasi = a.KodeLokasi
             inner join pelanggans d on d.KodePelanggan = a.KodePelanggan
             where a.KodeSO ='".$id."' limit 1")[0];
-        $items = DB::select("SELECT a.Qty,b.NamaItem,d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesanan_penjualan_detail a 
+        $items = DB::select("SELECT a.Qty,b.NamaItem,d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesanan_penjualan_detail a
             inner join items b on a.KodeItem = b.KodeItem
-            inner join itemkonversis c on c.KodeItem = a.KodeItem 
+            inner join itemkonversis c on c.KodeItem = a.KodeItem
             inner join satuans d on c.KodeSatuan = d.KodeSatuan
             where a.KodeSO ='".$id."' ");
         // dd($items);
@@ -179,18 +186,18 @@ class PemesananPenjualanController extends Controller
     {
         $matauang = DB::table('matauangs')->get();
         $lokasi = DB::table('lokasis')->get();
-        $data = DB::select("SELECT a.KodeSo, a.Tanggal, a.tgl_kirim,a.Expired,a.term, a.POPelanggan, b.NamaMataUang, c.NamaLokasi, d.NamaPelanggan, a.Keterangan, a.Diskon, a.PPN, a.Subtotal, a.NilaiPPN, c.KodeLokasi, d.KodePelanggan, b.KodeMataUang from pemesananpenjualans a 
+        $data = DB::select("SELECT a.KodeSo, a.Tanggal, a.tgl_kirim,a.Expired,a.term, a.POPelanggan, b.NamaMataUang, c.NamaLokasi, d.NamaPelanggan, a.Keterangan, a.Diskon, a.PPN, a.Subtotal, a.NilaiPPN, c.KodeLokasi, d.KodePelanggan, b.KodeMataUang from pemesananpenjualans a
             inner join matauangs b on b.KodeMataUang = a.KodeMataUang
             inner join lokasis c on c.KodeLokasi = a.KodeLokasi
             inner join pelanggans d on d.KodePelanggan = a.KodePelanggan
             where a.KodeSO ='".$id."' limit 1")[0];
-        $items = DB::select("SELECT a.Qty,b.KodeItem,b.NamaItem,d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesanan_penjualan_detail a 
+        $items = DB::select("SELECT a.Qty,b.KodeItem,b.NamaItem,d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesanan_penjualan_detail a
             inner join items b on a.KodeItem = b.KodeItem
-            inner join itemkonversis c on c.KodeItem = a.KodeItem 
+            inner join itemkonversis c on c.KodeItem = a.KodeItem
             inner join satuans d on c.KodeSatuan = d.KodeSatuan
             where a.KodeSO ='".$id."' ");
-        $itemSelect = DB::select("SELECT s.KodeItem, s.NamaItem, k.HargaJual, t.NamaSatuan, s.Keterangan FROM items s 
-            inner join itemkonversis k on k.KodeItem = s.KodeItem 
+        $itemSelect = DB::select("SELECT s.KodeItem, s.NamaItem, k.HargaJual, t.NamaSatuan, s.Keterangan FROM items s
+            inner join itemkonversis k on k.KodeItem = s.KodeItem
             inner join satuans t on k.KodeSatuan = t.KodeSatuan where s.jenisitem='bahanbaku' ");
         // dd($items);
         $data->Tanggal = Carbon::parse($data->Tanggal)->format('Y-m-d');
@@ -208,7 +215,7 @@ class PemesananPenjualanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         DB::table('pemesanan_penjualan_detail')->where('KodeSO', '=', $request->KodeSO)->delete();
         $items = $request->item;
         $qtys = $request->qty;
@@ -225,7 +232,7 @@ class PemesananPenjualanController extends Controller
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
             ]);
-            
+
         }
         DB::table('pemesananpenjualans')
         ->where('KodeSO', $request->KodeSO)->update([
@@ -261,7 +268,9 @@ class PemesananPenjualanController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('pemesananpenjualans')->where('KodeSO', $id)->delete();
+        DB::table('pemesananpenjualans')->where('KodeSO', $id)->update([
+          'Status' => 'DEL'
+        ]);
         return redirect('/sopenjualan');
     }
 
@@ -305,15 +314,15 @@ class PemesananPenjualanController extends Controller
     }
 
     public function view($id)
-    {   
-        $data = DB::select("SELECT a.KodeSo, a.Tanggal, a.tgl_kirim,a.Expired,a.term, a.POPelanggan, b.NamaMataUang, c.NamaLokasi, d.NamaPelanggan, a.Keterangan, a.Diskon, a.PPN, a.Subtotal, a.NilaiPPN from pemesananpenjualans a 
+    {
+        $data = DB::select("SELECT a.KodeSo, a.Tanggal, a.tgl_kirim,a.Expired,a.term, a.POPelanggan, b.NamaMataUang, c.NamaLokasi, d.NamaPelanggan, a.Keterangan, a.Diskon, a.PPN, a.Subtotal, a.NilaiPPN from pemesananpenjualans a
             inner join matauangs b on b.KodeMataUang = a.KodeMataUang
             inner join lokasis c on c.KodeLokasi = a.KodeLokasi
             inner join pelanggans d on d.KodePelanggan = a.KodePelanggan
             where a.KodeSO ='".$id."' limit 1")[0];
-        $items = DB::select("SELECT a.Qty,b.NamaItem,d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesanan_penjualan_detail a 
+        $items = DB::select("SELECT a.Qty,b.NamaItem,d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesanan_penjualan_detail a
             inner join items b on a.KodeItem = b.KodeItem
-            inner join itemkonversis c on c.KodeItem = a.KodeItem 
+            inner join itemkonversis c on c.KodeItem = a.KodeItem
             inner join satuans d on c.KodeSatuan = d.KodeSatuan
             where a.KodeSO ='".$id."' ");
         // dd($items);
@@ -323,15 +332,15 @@ class PemesananPenjualanController extends Controller
     }
 
     public function print($id)
-    {   
-        $data = DB::select("SELECT a.KodeSo, a.Tanggal, a.tgl_kirim,a.Expired,a.term, a.POPelanggan, b.NamaMataUang, c.NamaLokasi, d.NamaPelanggan, a.Keterangan, a.Diskon, a.PPN, a.Subtotal, a.NilaiPPN from pemesananpenjualans a 
+    {
+        $data = DB::select("SELECT a.KodeSo, a.Tanggal, a.tgl_kirim,a.Expired,a.term, a.POPelanggan, b.NamaMataUang, c.NamaLokasi, d.NamaPelanggan, a.Keterangan, a.Diskon, a.PPN, a.Subtotal, a.NilaiPPN from pemesananpenjualans a
             inner join matauangs b on b.KodeMataUang = a.KodeMataUang
             inner join lokasis c on c.KodeLokasi = a.KodeLokasi
             inner join pelanggans d on d.KodePelanggan = a.KodePelanggan
             where a.KodeSO ='".$id."' limit 1")[0];
-        $items = DB::select("SELECT a.Qty,b.NamaItem,d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesanan_penjualan_detail a 
+        $items = DB::select("SELECT a.Qty,b.NamaItem,d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesanan_penjualan_detail a
             inner join items b on a.KodeItem = b.KodeItem
-            inner join itemkonversis c on c.KodeItem = a.KodeItem 
+            inner join itemkonversis c on c.KodeItem = a.KodeItem
             inner join satuans d on c.KodeSatuan = d.KodeSatuan
             where a.KodeSO ='".$id."' ");
         $jml = 0;

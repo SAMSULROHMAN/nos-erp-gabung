@@ -1,4 +1,4 @@
-@extends('home')
+@extends('index')
 @section('content')
     <div class="container">
         <div class="row">
@@ -8,7 +8,7 @@
                         <h1>Tambah Data Gudang</h1>
                     </div>
                     <div class="x_content">
-                        <form action="/datagudang/store" method="get">
+                        <form action="{{ route('datagudang.store')}}" method="post">
                         @csrf
                             <div class="form-group">
                                 <label>Kode Gudang: </label>
