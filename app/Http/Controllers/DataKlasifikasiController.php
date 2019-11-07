@@ -18,7 +18,6 @@ class DataKlasifikasiController extends Controller
     public function index()
     {
         $kategori = kategori::where('Status','OPN')->paginate(5);
-
         return view('master.dataKlasifikasi', ['kategori' => $kategori]);
     }
 
