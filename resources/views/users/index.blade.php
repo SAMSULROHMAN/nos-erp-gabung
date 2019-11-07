@@ -1,71 +1,101 @@
-/*
-@extends('another')
+@extends('index')
+
+
 @section('content')
-    {!! $dataTable->table() !!}
-@endsection
 
-@push('scripts')
-    {!! $dataTable->scripts() !!}
-@endpush
-*/
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<div class="row">
 
-        <title>Laravel DataTables Editor</title>
+    <div class="col-lg-12 margin-tb">
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.0/css/buttons.bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.4/css/select.bootstrap.min.css">
-        <link rel="stylesheet" href="css/dataTables.editor.css">
-        <link rel="stylesheet" href="css/editor.bootstrap.css">
+        <div class="pull-left">
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdn.datatables.net/select/1.2.4/js/dataTables.select.min.js"></script>
-        <script src="{{asset('js/dataTables.editor.js')}}"></script>
+            <h2>Users Management</h2>
 
-        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.bootstrap.min.js"></script>
-
-        <script src="{{asset('js/editor.bootstrap.min.js')}}"></script>
-    </head>
-    <body>
-        <div class="container">
-            {{$dataTable->table(['id' => 'users'])}}
         </div>
 
-        <script>
-            $(function() {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': '{{csrf_token()}}'
-                    }
-                });
+        <div class="pull-right">
 
-                var editor = new $.fn.dataTable.Editor({
-                    ajax: "/users",
-                    table: "#users",
-                    display: "bootstrap",
-                    fields: [
-                        {label: "Name:", name: "name"},
-                        {label: "Email:", name: "email"},
-                        {label: "Password:", name: "password", type: "password"}
-                    ]
-                });
+            <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
 
-                $('#users').on('click', 'tbody td:not(:first-child)', function (e) {
-                    editor.inline(this);
-                });
+        </div>
 
-                {{$dataTable->generateScripts()}}
-            })
-        </script>
-    </body>
-</html>
+    </div>
+
+</div>
+
+
+@if ($message = Session::get('success'))
+
+<div class="alert alert-success">
+
+    <p>{{ $message }}</p>
+
+</div>
+
+@endif
+
+
+<table class="table table-bordered">
+
+    <tr>
+
+        <th>No</th>
+
+        <th>Name</th>
+
+        <th>Email</th>
+
+        <th>Roles</th>
+
+        <th width="280px">Action</th>
+
+    </tr>
+
+    @foreach ($data as $key => $user)
+
+    <tr>
+
+        <td>{{ ++$i }}</td>
+
+        <td>{{ $user->name }}</td>
+
+        <td>{{ $user->email }}</td>
+
+        <td>
+
+            @if(!empty($user->getRoleNames()))
+
+                @foreach($user->getRoleNames() as $v)
+
+                    <label class="badge badge-success">{{ $v }}</label>
+
+                    @endforeach
+
+                    @endif
+
+        </td>
+
+        <td>
+
+            <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
+
+            <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+
+            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+
+            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+
+            {!! Form::close() !!}
+
+        </td>
+
+    </tr>
+
+    @endforeach
+
+</table>
+
+
+{!! $data->render() !!}
+
+@endsection

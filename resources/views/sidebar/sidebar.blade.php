@@ -99,6 +99,19 @@
                 </li>
             </ul>
         </li>
+        <li>
+          <a>
+            <i class="fa fa-users"></i>User Control <span class="fa fa-chevron-down"></span>
+            <ul class="nav child_menu">
+              <li>
+                <a href="{{ url('roles')}}">Roles</a>
+              </li>
+              <li>
+                <a href="{{ url('users')}}">User</a>
+              </li>
+            </ul>
+          </a>
+        </li>
         </ul>
     </div>
 </div>
