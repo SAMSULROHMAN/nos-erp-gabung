@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use DB;
-use App\item;
-use App\kategori;
-use App\satuan;
-use App\itemkonversi;
+use App\Model\item;
+use App\Model\kategori;
+use App\Model\satuan;
+use App\Model\itemkonversi;
 
 class DataItemController extends Controller
 {
@@ -17,13 +17,18 @@ class DataItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {   
-        // $items = item::latest()->paginate(5);
+    public function index(Request $request)
+    {
         $items = item::leftJoin('itemkonversis','itemkonversis.KodeItem','=','items.KodeItem')
         ->select('items.*','itemkonversis.KodeSatuan')
         ->paginate(5);
-        // $items = item::all();
+        $search = $request->get('keyword');
+        if($search){
+          $lokasi = item::where('KodeItem','LIKE',"%$search%")
+          ->orWhere('NamaItem','LIKE',"%$search%")
+          ->orWhere('jenisitem','LIKE',"%$search%")
+          ->paginate(5);
+        }
         return view('master.dataItem', ['items' => $items]);
     }
 
@@ -35,7 +40,7 @@ class DataItemController extends Controller
     public function create()
     {
         $last_id = DB::select('SELECT * FROM items ORDER BY KodeItem DESC LIMIT 1');
- 
+
         //Auto generate ID
         if($last_id == null) {
             $newID = "BRS000001";
@@ -60,7 +65,7 @@ class DataItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $lastID = DB::select("SELECT count(1) as jml FROM items where KodeKategori='".$request->KodeKategori."' ")[0]->jml;
         $lastID +=1;
         $kodeAwal = DB::select("SELECT KodeItemAwal as jml FROM kategoris where KodeKategori='".$request->KodeKategori."' group by KodeItemAwal")[0]->jml;
@@ -72,7 +77,7 @@ class DataItemController extends Controller
         }else{
             $kodeAwal .="00".$lastID;
         }
-        
+
         DB::table('items')->insert([
             'KodeItem' => $kodeAwal,
             'KodeKategori' => $request->KodeKategori,
