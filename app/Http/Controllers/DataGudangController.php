@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Input;
 
 class DataGudangController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct(){
+      $this->middleware('permission:gudang-list|gudang-create|gudang-edit|gudang-delete', ['only' => ['index','show']]);
+      $this->middleware('permission:gudang-create', ['only' => ['create','store']]);
+      $this->middleware('permission:gudang-edit', ['only' => ['edit','update']]);
+      $this->middleware('permission:gudang-delete', ['only' => ['destroy']]);
+    }
+
     public function index(Request $request)
     {
         // untuk menampilkan data gudang
