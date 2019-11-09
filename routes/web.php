@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function() {
   Route::get('/batalpemesananPenjualan', 'PagesController@batalPenjualan');
 
   //route surat jalan
+  Route::get('/suratJalan/cari','SuratJalanController@filterData');
   Route::get('/suratJalan', 'SuratJalanController@index');
   Route::get('/suratJalan/create/{id}','SuratJalanController@create');
   Route::post('/suratJalan/store/{id}','SuratJalanController@store');
@@ -54,11 +55,13 @@ Route::group(['middleware' => 'auth'], function() {
   Route::get('/suratJalan/view/{id}','SuratJalanController@view');
   Route::get('/suratJalan/print/{id}','SuratJalanController@print');
   Route::post('/suratJalan/confirm/{id}','SuratJalanController@confirm');
+  Route::get('/konfirmasisuratJalan/cari','SuratJalanController@filterKonfirmasiSuratJalan');
   Route::get('/konfirmasisuratJalan', 'SuratJalanController@konfirmasiSuratJalan');
 
   //route return surat jalan
   Route::get('/returnSuratJalan/add/{id}', 'ReturnSuratJalanController@add');
   Route::post('/returnSuratJalan/store/{id}', 'ReturnSuratJalanController@store');
+  Route::get('/returnSuratJalan/cari','ReturnSuratJalanController@filterData');
   Route::get('/returnSuratJalan', 'ReturnSuratJalanController@index');
   Route::get('/returnSuratJalan/show/{id}','ReturnSuratJalanController@show');
   Route::get('/returnSuratJalan/view/{id}','ReturnSuratJalanController@view');
@@ -135,8 +138,8 @@ Route::group(['middleware' => 'auth'], function() {
   Route::post('/pelunasanhutang/payment/{id}/add', 'PelunasanHutangController@addpaymentpost');
 
   // route pemesananpenjualan
+  Route::get('/sopenjualan/cari', 'PemesananPenjualanController@filterData');
   Route::get('/sopenjualan', 'PemesananPenjualanController@index');
-  Route::get('/filterdata', 'PemesananPenjualanController@filterData');
   //route SO
   Route::post('/sopenjualan/store', 'PemesananPenjualanController@store');
   Route::get('/sopenjualan/create', 'PemesananPenjualanController@create');
@@ -148,8 +151,8 @@ Route::group(['middleware' => 'auth'], function() {
   Route::post('/sopenjualan/confirm/{id}', 'PemesananPenjualanController@confirm');
   Route::get('/sopenjualan/print/{id}','PemesananPenjualanController@print');
 
+  Route::get('/konfirmasipemesananPenjualan/filter', 'PemesananPenjualanController@konfirmasiPenjualanFilter');
   Route::get('/konfirmasipemesananPenjualan', 'PemesananPenjualanController@konfirmasiPenjualan');
-  Route::post('/konfirmasipemesananPenjualan/filter', 'PemesananPenjualanController@konfirmasiPenjualanFilter');
   Route::post('/konfirmasipemesananPenjualan/print', 'PemesananPenjualanController@konfirmasiPenjualanPrint');
   Route::get('/dikirimpemesananPenjualan', 'PemesananPenjualanController@dikirimPenjualan');
 

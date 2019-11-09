@@ -16,21 +16,39 @@ use App\Model\invoicepiutang;
 
 class SuratJalanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $suratjalans = suratjalan::where('Status','OPN')->get();
         return view('suratJalan.suratJalan',compact('suratjalans'));
     }
 
+    public function filterData(Request $request)
+    {
+        $start = $request->get('start');
+        $end = $request->get('end');
+        //dd($start,$end);
+        $result = suratjalan::where('Status','OPN')->get();
+        $suratjalans = $result->whereBetween('Tanggal',[$start.' 00:00:00', $end.' 00:00:00']);
+        $suratjalans->all();
+        return view('suratJalan.suratJalan',compact('suratjalans','start','end'));
+    }
+
     public function konfirmasiSuratJalan()
     {
         $suratjalans = suratjalan::where('Status','CFM')->get();
         return view('suratJalan.konfirmasiSuratJalan',compact('suratjalans'));
+    }
+
+    public function filterKonfirmasiSuratJalan(Request $request)
+    {
+        $start = $request->get('start');
+        $end = $request->get('end');
+        // dd($start,$end);
+        $result = suratjalan::where('Status','CFM')->get();
+        $suratjalans = $result->whereBetween('Tanggal',[$start.' 00:00:00', $end.' 00:00:00']);
+        $suratjalans->all();
+        return view('suratJalan.suratJalan',compact('suratjalans','start','end'));
     }
 
     /**

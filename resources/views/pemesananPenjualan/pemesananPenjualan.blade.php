@@ -8,13 +8,13 @@
               <div class="x_title">
                 <h3>Filter Tanggal</h3>
               </div>
-              <form action="{{ url('/sopenjualan')}}" method="get">
+              <form action="{{ url('/sopenjualan/cari')}}" method="get">
                 <div class="x_content">
                   <div class="col-md-5 col-sm-5">
                     <div class="form-group">
                         <label for="tanggalpo">Dari :</label>
                         <div class="input-group date" id="tanggalpo">
-                            <input type="text" class="form-control" name="start"/>
+                            <input type="text" class="form-control" name="mulai" value="{{ Request::get('mulai')}}"/>
                             <span class="input-group-addon">
                                <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -24,8 +24,8 @@
                   <div class="col-md-5 col-sm-5">
                     <div class="form-group">
                         <label for="tanggalpo">Sampai :</label>
-                        <div class="input-group date" id="tanggalposampai" name="end">
-                            <input type="text" class="form-control"/>
+                        <div class="input-group date" id="tanggalposampai">
+                            <input type="text" class="form-control" name="sampai" value="{{ Request::get('mulai')}}"/>
                             <span class="input-group-addon">
                                <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -108,12 +108,12 @@
 <script type="text/javascript">
     $('#tanggalpo').datetimepicker({
       defaultDate: new Date(),
-      format: 'DD-MM-YYYY'
+      format: 'YYYY-MM-DD'
     });
 
     $('#tanggalposampai').datetimepicker({
       defaultDate: new Date(),
-      format: 'DD-MM-YYYY'
+      format: 'YYYY-MM-DD'
     });
 
     $('#table').DataTable();

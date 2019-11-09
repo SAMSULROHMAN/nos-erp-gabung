@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\suratjalan;
-use App\karyawan;
-use App\pemesananpenjualan;
-use App\matauang;
-use App\lokasi;
-use App\pelanggan;
+use App\Model\suratjalan;
+use App\Model\karyawan;
+use App\Model\pemesananpenjualan;
+use App\Model\matauang;
+use App\Model\lokasi;
+use App\Model\pelanggan;
 use Carbon\Carbon;
-use App\suratjalanreturn;
-use App\invoicepiutangdetail;
+use App\Model\suratjalanreturn;
+use App\Model\invoicepiutangdetail;
 use PDF;
 
 class ReturnSuratJalanController extends Controller
@@ -27,7 +27,7 @@ class ReturnSuratJalanController extends Controller
     {
         $sj =DB::select("select DISTINCT a.KodeSuratJalan,a.KodeSuratJalanID from (
 sELECT sj.KodeSuratJalanID,a.KodeSuratJalan,a.KodeItem, COALESCE(SUM(a.qty),0)/coalesce(NULLIF(COUNT(sjr.KodeSuratJalanReturnId), 0),1)-COALESCE(SUM(sjrd.Qty),0) as jml
-FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem 
+FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem
             inner join suratjalans sj on sj.KodeSuratJalan = a.KodeSuratJalan and sj.Status='CFM'
             left join suratjalanreturns sjr on sjr.KodeSuratJalanId = sj.KodeSuratJalanID
             left join suratjalanreturndetails sjrd on sjrd.KodeSuratJalanReturn = sjr.KodeSuratJalanReturn
@@ -39,8 +39,8 @@ FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem
             }
             $id = $sj[0]->KodeSuratJalanID;
         }
-        $items = DB::select("sELECT a.KodeItem,i.NamaItem, COALESCE(SUM(a.qty),0)/coalesce(NULLIF(COUNT(sjr.KodeSuratJalanReturnId), 0),1)-COALESCE(SUM(sjrd.Qty),0) as jml, i.Keterangan, s.NamaSatuan, k.HargaJual 
-FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner join itemkonversis k on i.KodeItem = k.KodeItem inner join satuans s on s.KodeSatuan = k.KodeSatuan 
+        $items = DB::select("sELECT a.KodeItem,i.NamaItem, COALESCE(SUM(a.qty),0)/coalesce(NULLIF(COUNT(sjr.KodeSuratJalanReturnId), 0),1)-COALESCE(SUM(sjrd.Qty),0) as jml, i.Keterangan, s.NamaSatuan, k.HargaJual
+FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner join itemkonversis k on i.KodeItem = k.KodeItem inner join satuans s on s.KodeSatuan = k.KodeSatuan
             left join suratjalans sj on sj.KodeSuratJalan = a.KodeSuratJalan
             left join suratjalanreturns sjr on sjr.KodeSuratJalanId = sj.KodeSuratJalanID
             left join suratjalanreturndetails sjrd on sjrd.KodeSuratJalanReturn = sjr.KodeSuratJalanReturn
@@ -53,7 +53,7 @@ FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner joi
 
     public function store(Request $request,$id)
     {
-        
+
         $last_id = DB::select('SELECT * FROM suratjalanreturns ORDER BY KodeSuratJalanReturnId DESC LIMIT 1');
 
         $year_now = date('y');
@@ -110,9 +110,9 @@ FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner joi
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
             ]);
-            
+
         }
-        
+
         return redirect('/returnSuratJalan');
     }
 
@@ -124,6 +124,17 @@ FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner joi
         return view('returnSuratJalan.index',compact('suratjalanreturns'));
     }
 
+    public function filterData(Request $request)
+    {
+        $start = $request->get('start');
+        $end = $request->get('end');
+        // dd($start,$end);
+        $result = suratjalanreturn::where('Status','OPN')->get();
+        $suratjalanreturns = $result->whereDate('Tanggal',[$start.' 00:00:00',$end.' 00:00:00']);
+        $suratjalanreturns->all();
+        return view('returnSuratJalan.index',compact('suratjalanreturns','start','end'));
+    }
+
     public function show($id)
     {
         $suratjalanreturn = suratjalanreturn::where('KodeSuratJalanReturnId',$id)->first();
@@ -132,8 +143,8 @@ FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner joi
         $matauang = matauang::where('KodeMataUang',$suratjalan->KodeMataUang)->first();
         $lokasi = lokasi::where('KodeLokasi',$suratjalan->KodeLokasi)->first();
         $pelanggan = pelanggan::where('KodePelanggan',$suratjalan->KodePelanggan)->first();
-        $items = DB::select("sELECT a.KodeItem,i.NamaItem, SUM(a.Qty) as jml, i.Keterangan, s.NamaSatuan, k.HargaJual 
-            FROM suratjalanreturndetails a 
+        $items = DB::select("sELECT a.KodeItem,i.NamaItem, SUM(a.Qty) as jml, i.Keterangan, s.NamaSatuan, k.HargaJual
+            FROM suratjalanreturndetails a
             inner join suratjalanreturns b on a.KodeSuratJalanReturn = b.KodeSuratJalanReturn
             inner join items i on a.KodeItem = i.KodeItem inner join itemkonversis k on i.KodeItem = k.KodeItem inner join satuans s on s.KodeSatuan = k.KodeSatuan where b.KodeSuratJalanReturnId='".$id."' group by a.KodeItem, i.Keterangan, s.NamaSatuan, k.HargaJual, i.NamaItem ");
         return view('returnSuratJalan.show', compact('id','suratjalanreturn','driver','matauang','lokasi','pelanggan','items','suratjalan'));
@@ -180,7 +191,7 @@ FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner joi
             $newID = "SLM-" . $year_now . $month_now . $newID;
         }
         $tot = 0;
-    
+
         foreach ($items as $key => $value) {
             $tot += $value->jml;
         }
@@ -210,6 +221,17 @@ FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner joi
         return view('returnSuratJalan.listkonfirmasi',compact('suratjalanreturns'));
     }
 
+    public function filterKonfirmasiSuratJalanReturn(Request $request)
+    {
+      $start = $request->get('start');
+      $end = $request->get('end');
+      // dd($start,$end);
+      $result = suratjalanreturn::where('Status','OPN')->get();
+      $suratjalanreturns = $result->whereDate('Tanggal',[$start.' 00:00:00',$end.' 00:00:00']);
+      $suratjalanreturns->all();
+      return view('returnSuratJalan.listkonfirmasi',compact('suratjalanreturns'));
+    }
+
     public function view($id)
     {
         $suratjalanreturn = suratjalanreturn::where('KodeSuratJalanReturnId',$id)->first();
@@ -218,17 +240,17 @@ FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner joi
         $matauang = matauang::where('KodeMataUang',$suratjalan->KodeMataUang)->first();
         $lokasi = lokasi::where('KodeLokasi',$suratjalan->KodeLokasi)->first();
         $pelanggan = pelanggan::where('KodePelanggan',$suratjalan->KodePelanggan)->first();
-        $items = DB::select("sELECT a.KodeItem,i.NamaItem, SUM(a.Qty) as jml, i.Keterangan, s.NamaSatuan, k.HargaJual 
-            FROM suratjalanreturndetails a 
+        $items = DB::select("sELECT a.KodeItem,i.NamaItem, SUM(a.Qty) as jml, i.Keterangan, s.NamaSatuan, k.HargaJual
+            FROM suratjalanreturndetails a
             inner join suratjalanreturns b on a.KodeSuratJalanReturn = b.KodeSuratJalanReturn
             inner join items i on a.KodeItem = i.KodeItem inner join itemkonversis k on i.KodeItem = k.KodeItem inner join satuans s on s.KodeSatuan = k.KodeSatuan where b.KodeSuratJalanReturnId='".$id."' group by a.KodeItem, i.Keterangan, s.NamaSatuan, k.HargaJual, i.NamaItem ");
         return view('returnSuratJalan.view', compact('id','suratjalanreturn','driver','matauang','lokasi','pelanggan','items','suratjalan'));
     }
 
     public function print($id)
-    {   
-        $data = 
-        DB::select("select sj.*,a.*,b.Keterangan from suratjalanreturns a 
+    {
+        $data =
+        DB::select("select sj.*,a.*,b.Keterangan from suratjalanreturns a
             left join suratjalans sj on sj.KodeSuratJalanID = a.KodeSuratJalanId
             left join pemesananpenjualans b on sj.KodeSO = b.KodeSO  where a.KodeSuratJalanReturnId = '".$id."'")[0];
         // suratjalan::where('KodeSuratJalanID',$id)->first();
@@ -240,9 +262,9 @@ FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner joi
         // dd($data);
         $data->Tanggal = Carbon::parse($data->Tanggal)->format('d/m/Y');
         // $data->tgl_kirim = Carbon::parse($data->tgl_kirim)->format('d/m/Y');
-        
+
         $pdf = PDF::loadview('returnSuratJalan.print',compact('data', 'id', 'items', 'jml'));
-        
+
         return $pdf->download('returnSuratJalan.pdf');
     }
 
@@ -280,7 +302,7 @@ FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner joi
 
 
 
-    
 
-    
+
+
 }

@@ -7,30 +7,40 @@
             <div class="x_title">
               <h3>Filter Tanggal</h3>
             </div>
-            <div class="x_content">
-              <div class="col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label for="tanggalpo">Dari :</label>
-                    <div class="input-group date" id="tanggalpo">
-                        <input type="text" class="form-control"/>
-                        <span class="input-group-addon">
-                           <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+            <form class="" action="{{ url('/returnSuratJalan/cari')}}" method="get">
+              <div class="x_content">
+                <div class="col-md-5 col-sm-5">
+                  <div class="form-group">
+                      <label for="tanggalpo">Dari :</label>
+                      <div class="input-group date" id="start">
+                          <input type="text" class="form-control" name="start" value="{{ Request::get('start')}}"/>
+                          <span class="input-group-addon">
+                             <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-5 col-sm-5">
+                  <div class="form-group">
+                      <label for="tanggalpo">Sampai :</label>
+                      <div class="input-group date" id="end">
+                          <input type="text" class="form-control" name="end" value="{{ Request::get('end')}}"/>
+                          <span class="input-group-addon">
+                             <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                  <div class="form-group">
+                    <label for="">Filter</label>
+                    <div class="input-group">
+                      <input type="submit" class="btn btn-md btn-block btn-primary" value="Filter">
                     </div>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label for="tanggalpo">Sampai :</label>
-                    <div class="input-group date" id="tanggalposampai">
-                        <input type="text" class="form-control"/>
-                        <span class="input-group-addon">
-                           <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-              </div>
-            </div>
+            </form>
         </div>
 
         <div class="clearfix"></div>
@@ -77,14 +87,14 @@
 @section('scripts')
 
 <script type="text/javascript">
-    $('#tanggalpo').datetimepicker({
+    $('#start').datetimepicker({
       defaultDate: new Date(),
-      format: 'DD/MM/YYYY'
+      format: 'YYYY-MM-DD'
     });
 
-    $('#tanggalposampai').datetimepicker({
+    $('#end').datetimepicker({
       defaultDate: new Date(),
-      format: 'DD/MM/YYY'
+      format: 'YYYY-MM-DD'
     });
 
     $('#treturnsuratjalan').DataTable();
