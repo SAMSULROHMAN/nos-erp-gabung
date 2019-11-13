@@ -43,12 +43,16 @@
                                 <td>{{ $item->jenisitem }}</td>
                                 <td>{{ $item->KodeSatuan }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-warning">
+                                    {{-- <a href="#" class="btn btn-warning">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>Edit
-                                    </a>
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>Hapus
-                                    </button>
+                                    </a> --}}
+                                    <form action="{{ route('dataitem.destroy',$item->KodeItem)}}" method="post">
+                                      @method('DELETE')
+                                      @csrf
+                                      <button type="submit" class="btn btn-danger">
+                                          <i class="fa fa-trash" aria-hidden="true"></i>Hapus
+                                      </button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

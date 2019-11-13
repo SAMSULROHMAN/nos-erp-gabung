@@ -9,7 +9,7 @@
                     </div>
                     <div class="x_content">
                         @foreach($karyawan as $k)
-                        <form action="/datakaryawan/update/{{ $k->IDKaryawan }}" method="post">
+                        <form action="{{ route('/datakaryawan/update',$k->IDKaryawan)}}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label>Kode Karyawan: </label>

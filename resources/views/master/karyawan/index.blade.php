@@ -49,10 +49,10 @@
                                         <td>{{ $k->Telepon }}</td>
                                         <td>{{ $k->Email }}</td>
                                         <td>
-                                            <a href="/datakaryawan/edit/{{ $k->IDKaryawan }}" class="btn btn-warning">
+                                            <a href="{{ route('/datakaryawan/edit',$k->IDKaryawan)}}" class="btn btn-warning">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i> Edit
                                             </a>
-                                            <a href="/datakaryawan/destroy/{{ $k->IDKaryawan }}" class="btn btn-danger">
+                                            <a href="{{ route('/datakaryawan/destroy',$k->IDKaryawan)}}" class="btn btn-danger">
                                                 <i class="fa fa-trash" aria-hidden="true"></i> Hapus
                                             </a>
                                         </td>

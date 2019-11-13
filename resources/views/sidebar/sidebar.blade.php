@@ -99,7 +99,7 @@
                 </li>
             </ul>
         </li>
-        <li>
+        {{-- <li>
           <a>
             <i class="fa fa-users"></i>User Control <span class="fa fa-chevron-down"></span>
             <ul class="nav child_menu">
@@ -111,7 +111,7 @@
               </li>
             </ul>
           </a>
-        </li>
+        </li> --}}
         </ul>
     </div>
 </div>

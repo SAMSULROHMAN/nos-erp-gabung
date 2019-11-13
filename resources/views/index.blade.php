@@ -15,7 +15,9 @@
   <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
   <!-- Font Awesome -->
   <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+
   <link  href="{{ asset('css/datatables.min.css')}}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('vendors/select2/dist/css/select2.min.css')}}">
   <!-- Custom Theme Style -->
   <link href="{{ asset('/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
   <link href="{{ url('css/custom.min.css') }}" rel="stylesheet">
@@ -101,6 +103,7 @@
 
   <script src="{{ asset('vendors/jquery/dist/jquery.js')}}"></script>
   <script src="{{ asset('js/datatables.min.js')}}"></script>
+  <script src="{{ asset('vendors/select2/dist/js/select2.min.js')}}" charset="utf-8"></script>
   <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
   <script src="{{ asset('vendors/moment/min/moment.min.js')}}"></script>
   <script src="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>

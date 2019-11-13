@@ -8,7 +8,7 @@
                         <h1>Pelunasan Piutang</h1><br>
                     </div>
                     <div class="x_body">
-                        <table class="table table-light">
+                        <table class="table table-light" id="table">
                             <thead class="thead-light">
                                 <tr>
                                     <th>Pelanggan</th>
@@ -42,4 +42,9 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+  <script type="text/javascript">
+    $('#table').DataTable();
+  </script>
 @endsection

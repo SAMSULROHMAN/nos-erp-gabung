@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class item extends Model
 {
     protected $table = 'items';
+    protected $primaryKey = 'KodeItem';
+    protected $keyType = 'string';
     protected $fillable = ['KodeItem', 'KodeKategori', 'NamaItem', 'Status'];
 
     public function kategori()

@@ -11,7 +11,7 @@
                         @if($invoice->sisa >0)
                             <a class="btn btn-primary " href="{{url('/pelunasanpiutang/payment/'.$invoice->KodeInvoicePiutang.'/add')}}">Tambah Pembayaran</a>
                         @endif
-                        <table class="table table-light">
+                        <table class="table table-light" id="table">
                             <thead class="thead-light">
                                 <tr>
                                     <th>Pelanggan</th>
@@ -36,4 +36,9 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+  <script type="text/javascript">
+    $('#table').DataTable();
+  </script>
 @endsection

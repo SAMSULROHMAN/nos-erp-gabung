@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use Spatie\Permission\Model\Role;
+use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 

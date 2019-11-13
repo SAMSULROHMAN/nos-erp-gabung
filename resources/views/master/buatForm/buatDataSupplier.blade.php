@@ -8,7 +8,7 @@
                         <h1>Tambah Data Supplier</h1>
                     </div>
                     <div class="x_content">
-                        <form action="/datasupplier/store" method="get">
+                        <form action="{{ route('datasupplier.store')}}" method="get">
                         @csrf
                             <div class="form-group">
                                 <label>Kode Supplier: </label>

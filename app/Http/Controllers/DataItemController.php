@@ -20,7 +20,7 @@ class DataItemController extends Controller
     public function index(Request $request)
     {
         $items = item::leftJoin('itemkonversis','itemkonversis.KodeItem','=','items.KodeItem')
-        ->select('items.*','itemkonversis.KodeSatuan')
+        ->select('items.*','itemkonversis.KodeSatuan')->where('Status','OPN')
         ->paginate(5);
         $search = $request->get('keyword');
         if($search){
@@ -78,7 +78,8 @@ class DataItemController extends Controller
             $kodeAwal .="00".$lastID;
         }
 
-        DB::table('items')->insert([
+
+        $item = DB::table('items')->insert([
             'KodeItem' => $kodeAwal,
             'KodeKategori' => $request->KodeKategori,
             'NamaItem' => $request->NamaItem,
@@ -91,7 +92,7 @@ class DataItemController extends Controller
             'updated_at' => \Carbon\Carbon::now(),
         ]);
 
-        DB::table('itemkonversis')->insert([
+        $item2 = DB::table('itemkonversis')->insert([
             'KodeItem' => $kodeAwal,
             'KodeSatuan' => $request->KodeSatuan,
             'Konversi' => $request->Konversi,
@@ -101,6 +102,7 @@ class DataItemController extends Controller
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
+
         return redirect('/dataitem');
     }
 
@@ -146,6 +148,9 @@ class DataItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = item::find($id);
+        $item->Status = 'DEL';
+        $item->save();
+        return redirect('/dataitem');
     }
 }

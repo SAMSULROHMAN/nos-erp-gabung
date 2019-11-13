@@ -20,17 +20,27 @@ class PemesananPenjualanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        // $date = date('Y-m-d');
+        // $mulai = $date;
+        // $sampai = $date;
         $pemesananpenjualan = DB::table('pemesananpenjualans')->where('Status','OPN')->get();
         return view('pemesananPenjualan.pemesananPenjualan',compact('pemesananpenjualan'));
     }
 
     public function filterData(Request $request)
     {
-        $pemesananpenjualan = pemesananpenjualan::whereBetween('Tanggal',
-        [$request->start,$request->end])->get();
-        return redirect('/sopenjualan');
+        $mulai = $request->get('mulai');
+        $sampai = $request->get('sampai');
+        //dd($mulai,$sampai);
+        // $tanggal = '2019-09-13 00:00:00';
+        $hasil1 = pemesananpenjualan::where('Status','OPN')->get();
+        $pemesananpenjualan = $hasil1->whereBetween('Tanggal',[$mulai.' 00:00:00',$sampai.' 00:00:00']);
+        $pemesananpenjualan->all();
+        //return $pemesananpenjualan;
+        return view('pemesananPenjualan.pemesananPenjualan',compact('pemesananpenjualan','mulai','sampai'));
+
     }
 
     /**
@@ -289,10 +299,22 @@ class PemesananPenjualanController extends Controller
     }
 
     public function konfirmasiPenjualanFilter(Request $request){
-        $pemesananpenjualan =pemesananpenjualan::all()->where('Status','CFM')->where('Tanggal','>=',$request->start)->where('Tanggal','<=',$request->finish);
-        $filter = true;
-        $start = $request->start;
-        $finish = $request->finish;
+        // Cara 1
+        // $pemesananpenjualan = pemesananpenjualan::all()->where('Status','CFM')
+        //                     ->where('Tanggal','>=',$request->start)
+        //                     ->where('Tanggal','<=',$request->finish);
+        // $filter = true;
+        // $start = $request->start;
+        // $finish = $request->finish;
+        //Cara 2
+        $start = $request->get('start');
+        $end = $request->get('end');
+        //dd($start,$end);
+        // $tanggal = '2019-09-13 00:00:00';
+        $hasil1 = pemesananpenjualan::where('Status','CFM')->get();
+        $pemesananpenjualan = $hasil1->whereBetween('Tanggal',[$start.' 00:00:00',$end.' 00:00:00']);
+        $pemesananpenjualan->all();
+        //return $pemesananpenjualan;
         return view('pemesananPenjualan.listkonfirmasi',compact('pemesananpenjualan', 'filter','start','finish'));
     }
 

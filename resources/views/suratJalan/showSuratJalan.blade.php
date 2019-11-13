@@ -28,7 +28,7 @@
                     <h1>Surat Jalan</h1>
                 </div>
                 <div class="x_content">
-                    <form action="/suratJalan/confirm/{{$id}}" method="post">
+                    <form action="{{ url('/suratJalan/confirm',$id)}}" method="post">
                         @csrf
                         <!-- Contents -->
                         <br>
@@ -124,7 +124,7 @@
                                         </td>
                                     </tr>
                                     @endforeach
-                                    
+
                                 </table>
                                 <div class="col-md-9">
                                     <button type="submit" class="btn btn-success">Konfirmasi</button>
@@ -149,7 +149,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    
+
     function refresh(val){
         var base ="{{ url('/') }}"+"/suratJalan/create/"+val.value;
         window.location.href = base;

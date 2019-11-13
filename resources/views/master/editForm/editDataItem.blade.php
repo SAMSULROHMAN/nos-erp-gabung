@@ -8,7 +8,7 @@
     </div><!-- /.row -->
     <br>
 
-    <form action="" method="get">
+    <form action="{{ route('dataitem.update')}}" method="post">
     @csrf
         <div class="form-group">
             <label>ID Barang: </label>

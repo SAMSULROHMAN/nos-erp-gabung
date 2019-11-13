@@ -30,7 +30,7 @@
                     <h3 class="b">{{$newIDP}}</h3>
                 </div>
                 <div class="x_content">
-                    <form action="/sopenjualan/store" method="post" class="formsub" >
+                    <form action="{{ url('/sopenjualan/store') }}" method="post" class="formsub" >
                         @csrf
 
                         <!-- Contents -->
@@ -54,10 +54,6 @@
                                 <div class="form-group">
                                     <label for="inputTerm">Term</label>
                                     <input type="text" required="required" class="form-control" name="Term" id="inputTerm" placeholder="/hari">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPelanggan">P.O. Customer</label>
-                                    <input type="text"  required="required" class="form-control" name="po" id="inputBerlaku" placeholder="">
                                 </div>
                             </div>
                             <!-- pembatas -->
@@ -107,7 +103,7 @@
                                 <label for="inputKeterangan">Keterangan</label>
                                 <textarea required="required" class="form-control" name="Keterangan" id="inputKeterangan" rows="5"></textarea>
                                 <br><br>
-                                
+
                             </div>
                         </div>
                         <div class="form-row">
@@ -115,25 +111,26 @@
                                 <a href="#" class="btn btn-success" onclick="addrow()">
                                     <i class="fa fa-plus" aria-hidden="true"></i>Tambah Item
                                 </a>
+                                <br><br><br>
                                 <input type="hidden" value="1" name="totalItem" id="totalItem">
                                 @foreach($item as $itemData)
-                                    <input type="hidden" id="{{$itemData->KodeItem}}" value="{{$itemData->HargaJual}}">
+                                    <input type="hidden" id="{{$itemData->KodeItem}}" value="{{ $itemData->HargaJual }}">
                                     <input type="hidden" id="{{$itemData->KodeItem}}Ket" value="{{$itemData->Keterangan}}">
                                     <input type="hidden" id="{{$itemData->KodeItem}}Sat" value="{{$itemData->NamaSatuan}}">
                                 @endforeach
-                                <table id="items">
+                                <table id="items" class="table">
                                     <tr>
-                                        <td>nama barang</td>
-                                        <td>qty</td>
-                                        <td>satuan</td>
-                                        <td>harga</td>
-                                        <td>keterangan</td>
-                                        <td>total</td>
+                                        <td>Nama Barang</td>
+                                        <td>Qty</td>
+                                        <td>Satuan</td>
+                                        <td>Harga</td>
+                                        <td>Keterangan</td>
+                                        <td>Total</td>
                                         <td></td>
                                     </tr>
                                     <tr class="rowinput">
                                         <td>
-                                            <select name="item[]" onchange="barang(this,1);" class="form-control item1">
+                                            <select name="item[]" onchange="barang(this,1);" class="form-control item1" id="item">
                                                 @foreach($item as $itemData)
                                                     <option value="{{$itemData->KodeItem}}">{{$itemData->NamaItem}}</option>
                                                 @endforeach
@@ -181,7 +178,7 @@
 @endsection
 @section('scripts')
 <script type="text/javascript">
-
+    $('#item').select2();
     var item =$(".item"+1).val();
     var sat =$("#"+item+"Sat").val();
     $(".satuan"+1).val(sat);
@@ -212,7 +209,7 @@
         res = res.replace("satuan1", "satuan"+count);
         res = res.replace("keterangan1", "keterangan"+count);
         res = res.replace("<td></td>", '<td><i onclick="del('+count+')" class="fa fa-trash"></i></td>');
-        
+
         $("#items tbody").append(res);
         var item =$(".item"+count).val();
         var sat =$("#"+item+"Sat").val();
@@ -295,9 +292,9 @@
                     $(".qty"+i).focus();
                 }
             }
-            
+
         }
-        
+
     });
 </script>
 @endsection

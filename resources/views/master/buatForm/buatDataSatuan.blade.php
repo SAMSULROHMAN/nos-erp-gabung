@@ -8,7 +8,7 @@
                         <h1>Tambah Data Satuan</h1>
                     </div>
                     <div class="x_content">
-                        <form action="/datasatuan/store" method="get">
+                        <form action="{{ route('datasatuan.store')}}" method="get">
                         @csrf
                             <div class="form-group">
                                 <label>Kode Satuan: </label>
