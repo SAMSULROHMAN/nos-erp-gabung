@@ -11,6 +11,7 @@ Route::group(['middleware' => 'auth'], function() {
   Route::resource('users','UserController');
   // Master
   // route menu
+  Route::get('/test','Test\TestController');
   Route::resource('/datagudang', 'DataGudangController');
   Route::resource('/dataitem', 'DataItemController');
   Route::resource('/dataklasifikasi', 'DataKlasifikasiController');

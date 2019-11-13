@@ -70,8 +70,8 @@
                             <a href="{{ url('/suratJalan/show/'.$suratjalan->KodeSuratJalanID) }}" class="btn-sm btn btn-primary">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                             </a>
-                            <a href="{{ url('suratJalan/print/'.$suratjalan->KodeSuratJalanID)}}" class="btn-sm btn btn-warning">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            <a href="{{ url('suratJalan/print/'.$suratjalan->KodeSuratJalanID)}}" class="btn btn-md btn-success">
+                                <i class="fa fa-print"></i>
                             </a>
                             <a href="#" class="btn-sm btn btn-danger">
                                 <i class="fa fa-trash" aria-hidden="true"></i>

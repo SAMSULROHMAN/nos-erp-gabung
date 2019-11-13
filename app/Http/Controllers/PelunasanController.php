@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\invoicepiutang;
-use App\lokasi;
-use App\pelunasanpiutang;
-use App\kasbank;
-use App\matauang;
+use App\Model\invoicepiutang;
+use App\Model\lokasi;
+use App\Model\pelunasanpiutang;
+use App\Model\kasbank;
+use App\Model\matauang;
 
 class PelunasanController extends Controller
 {
@@ -18,7 +18,7 @@ class PelunasanController extends Controller
     }
 
     public function invoice($id){
-    	$invoice = DB::select("SELECT i.KodeInvoicePiutangShow, i.KodeInvoicePiutang, p.NamaPelanggan, i.Tanggal, d.Subtotal, COALESCE(sum(pp.Jumlah),0) as bayar FROM invoicepiutangs i inner join invoicepiutangdetails d on i.KodeInvoicePiutang = d.KodeInvoicePiutang inner join pelanggans p on p.KodePelanggan = i.KodePelanggan 
+    	$invoice = DB::select("SELECT i.KodeInvoicePiutangShow, i.KodeInvoicePiutang, p.NamaPelanggan, i.Tanggal, d.Subtotal, COALESCE(sum(pp.Jumlah),0) as bayar FROM invoicepiutangs i inner join invoicepiutangdetails d on i.KodeInvoicePiutang = d.KodeInvoicePiutang inner join pelanggans p on p.KodePelanggan = i.KodePelanggan
 left join pelunasanpiutangs pp on pp.KodeInvoice = i.KodeInvoicePiutang
 where p.KodePelanggan ='".$id."'
 GROUP by i.KodeInvoicePiutangShow, i.KodeInvoicePiutang, p.NamaPelanggan, i.Tanggal, d.Subtotal"  );
@@ -148,5 +148,5 @@ GROUP by i.KodeInvoicePiutangShow, i.KodeInvoicePiutang, p.NamaPelanggan, i.Tang
 
         return redirect('/pelunasanpiutang/payment/'.$id);
     }
-    
+
 }

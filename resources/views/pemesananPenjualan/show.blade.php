@@ -29,7 +29,7 @@
                     <h3>{{$id}}</h3>
                 </div>
                 <div class="x_content">
-                    <form action="/sopenjualan/confirm/{{$id}}" method="post">
+                    <form action="{{ url('/sopenjualan/confirm',$id)}}" method="post">
                         @csrf
 
                         <!-- Contents -->
@@ -95,7 +95,7 @@
                                 <label for="inputKeterangan">Keterangan</label>
                                 <textarea readonly="" class="form-control" name="Keterangan" id="inputKeterangan" rows="5">{{$data->Keterangan}}</textarea>
                                 <br><br>
-                                
+
                             </div>
                         </div>
                         <div class="form-row">

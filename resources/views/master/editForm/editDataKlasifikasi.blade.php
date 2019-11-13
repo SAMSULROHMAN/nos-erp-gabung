@@ -9,7 +9,8 @@
                     </div>
                     <div class="x_content">
                         @foreach($kategori as $kat)
-                        <form action="/dataklasifikasi/update/{{ $kat->KodeKategori }}" method="post">
+                        <form action="{{ route('dataklasifikasi.update',$kat->KodeKategori)}}" method="post">
+                          @method('PUT')
                         @csrf
                             <div class="form-group">
                                 <label>Kode Klasifikasi: </label>

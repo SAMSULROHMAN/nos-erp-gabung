@@ -28,7 +28,7 @@
                     <h1>Surat Jalan</h1>
                 </div>
                 <div class="x_content">
-                    <form action="/suratJalan/store/{{$id}}" method="post" class="formsub">
+                    <form action="{{ url('/suratJalan/store',$id)}}" method="post" class="formsub">
                         @csrf
 
                         <!-- Contents -->
@@ -45,7 +45,7 @@
                                             @else
                                                 <option value="{{$data->KodeSO}}">{{$data->KodeSO}}</option>
                                             @endif
-                                            
+
                                         @endforeach
                                     </select>
                                 </div>
@@ -151,7 +151,7 @@
                                         </td>
                                     </tr>
                                     @endforeach
-                                    
+
                                 </table>
                                 <div class="col-md-9">
                                     <button type="submit" class="btn btn-success">Simpan</button>
@@ -177,6 +177,7 @@
 </div>
 <script type="text/javascript">
     
+
     function refresh(val){
         var base ="{{ url('/') }}"+"/suratJalan/create/"+val.value;
         window.location.href = base;
@@ -232,9 +233,9 @@
                     $(".qty"+i).focus();
                 }
             }
-            
+
         }
-        
+
     });
 </script>
 @endsection

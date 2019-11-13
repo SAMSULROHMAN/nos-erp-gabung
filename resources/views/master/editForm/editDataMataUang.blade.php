@@ -9,7 +9,7 @@
                     </div>
                     <div class="x_content">
                         @foreach($matauang as $mu)
-                        <form action="/datamatauang/update/{{ $mu->KodeMataUang }}" method="post">
+                        <form action="{{ route('datamatauang.update',$mu->KodeMataUang)}}" method="post">
                         @csrf
                             <div class="form-group">
                                 <label>Kode Mata Uang: </label>

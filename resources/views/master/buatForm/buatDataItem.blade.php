@@ -8,7 +8,7 @@
                     <h1>Tambah data</h1>
                 </div>
                 <div class="x_content">
-                    <form action="{{ url('/dataitem/store')}}" class="form-horizontal form-label-left input_mask" method="post">
+                    <form action="{{ route('dataitem.store')}}" class="form-horizontal form-label-left input_mask" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="">Kode Kategori</label>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Satuan</label>
-                            <select name="KodeSatuan" id="" class="form-control">
+                            <select name="KodeSatuan" id="satuan" class="form-control">
                                 <option value="">-- Pilih Satuan --</option>
                                 @foreach ($satuan as $s)
                                     <option value="{{ $s->KodeSatuan}}">{{ $s->NamaSatuan }}</option>
@@ -45,19 +45,19 @@
                         </div>
                         <div class="form-group">
                             <label for="">Konversi</label>
-                            <input type="number" name="Konversi" id="" class="form-control">
+                            <input type="number" readonly name="Konversi" id="" class="form-control" value="1">
                         </div>
                         <div class="form-group">
                             <label for="">Harga Jual</label>
-                            <input type="number" name="HargaJual" id="" class="form-control">
+                            <input type="text" name="HargaJual" id="HargaJual" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="">Harga Beli</label>
-                            <input type="number" name="HargaBeli" id="" class="form-control">
+                            <input type="text" name="HargaBeli" id="HargaBeli" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="">Harga Grosir</label>
-                            <input type="number" name="HargaGrosir" id="" class="form-control">
+                            <input type="text" name="HargaGrosir" id="Grosir" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="Alias">Alias</label>
@@ -76,4 +76,10 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+  <script type="text/javascript">
+      $('#KodeKategori').select2();
+      $('#satuan').select2();
+  </script>
 @endsection

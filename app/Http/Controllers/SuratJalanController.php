@@ -362,7 +362,7 @@ class SuratJalanController extends Controller
         // ' group by a.KodeItem, i.Keterangan, s.NamaSatuan, k.HargaJual, i.NamaItem ");
         $items = DB::select("sELECT a.KodeItem,i.NamaItem, SUM(a.Qty) as jml, i.Keterangan, s.NamaSatuan, k.HargaJual FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner join itemkonversis k on i.KodeItem = k.KodeItem inner join satuans s on s.KodeSatuan = k.KodeSatuan where a.KodeSuratJalan='" . $suratjalan->KodeSuratJalan . "' group by a.KodeItem, i.Keterangan, s.NamaSatuan, k.HargaJual, i.NamaItem ");
 
-        $pdf = PDF::loadview('suratJalan.pdfdetail', compact('suratjalan', 'driver', 'matauang', 'lokasi', 'pelanggan', 'items'));
+        $pdf = PDF::loadview('suratJalan.pdf', compact('suratjalan', 'driver', 'matauang', 'lokasi', 'pelanggan', 'items'));
         //->setPaper('a5', 'landscape');
         return $pdf->stream();
     }

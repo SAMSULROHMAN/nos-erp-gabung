@@ -28,7 +28,7 @@
                     <h1>Pelunasan Piutang</h1>
                 </div>
                 <div class="x_content">
-                    <form action="/pelunasanpiutang/payment/{{$invoice->KodeInvoicePiutang}}/add" method="post" class="formsub">
+                    <form action="{{ url('/pelunasanpiutang/payment'.$invoice->KodeInvoicePiutang.'/add')}}" method="post" class="formsub">
                         @csrf
 
                         <!-- Contents -->
@@ -36,7 +36,7 @@
                         <div class="form-row">
                             <!-- column 1 -->
                             <div class="form-group col-md-3">
-                                
+
                                 <div class="form-group">
                                     <label for="inputDate">Kode Invoice</label>
                                     <input type="text" class="form-control" name="kode" value="{{$invoice->KodeInvoicePiutangShow}}" readonly="" id="inputDate" >
@@ -59,7 +59,7 @@
                             </div>
 
                             <div class="form-group col-md-3">
-                                
+
                                 <div class="form-group">
                                     <label for="inputDate">Tanggal Pembayaran</label>
                                     <input type="date" class="form-control" name="Tanggal" id="inputDate" required="required" >
@@ -75,7 +75,7 @@
                             </div>
 
                             <div class="form-group col-md-3">
-                                
+
                                 <div class="form-group">
                                     <label for="inputDate">Jumlah</label>
                                     <input type="number" class="form-control jml" name="jml" value="{{$invoice->sisa}}" required="required" pattern="[0-9]+([\.,][0-9]+)?" step="0.01">
@@ -83,17 +83,17 @@
                                 <div class="form-group">
                                     <label for="inputDate">Keterangan</label>
                                     <textarea class="form-control" name="keterangan">
-                                        
+
                                     </textarea>
                                 </div>
-                                
+
                             </div>
 
-                            
+
 
                             <br>
                             <input type="submit" name="" value="Simpan" class="btn btn-primary">
-                        
+
                     </form>
                 </div>
             </div>
