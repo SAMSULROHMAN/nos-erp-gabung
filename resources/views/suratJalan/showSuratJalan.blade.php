@@ -130,7 +130,7 @@
                                     <button type="submit" class="btn btn-success">Konfirmasi</button>
                                     <button type="submit" class="btn btn-danger">Batal</button>
                                 </div>
-                                <div class="col-md-3">
+                                {{-- <div class="col-md-3">
                                     <label for="inputPelanggan">Subtotal</label>
                                     <input type="hidden" value="{{sizeof($items)}}" name="" class="tot">
                                     <input type="text" readonly="" class="form-control befDis" id="inputBerlaku" placeholder="">
@@ -139,7 +139,7 @@
                                     <input type="hidden" name="diskonval" class="diskonval ">
                                     <label for="inputPelanggan">Total</label>
                                     <input type="text" readonly="" class="form-control subtotal" name="subtotal" id="inputBerlaku" placeholder="">
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </form>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\pelanggan;
+use App\Model\pelanggan;
+use App\Model\alamatpelanggan;
+use App\Model\lokasi;
 use DB;
 
 class DataPelangganController extends Controller
@@ -50,15 +52,30 @@ class DataPelangganController extends Controller
      */
     public function store(Request $request)
     {
+        $pelanggan = $request->all();
+        $alamats = $request->alamat;
         $pelanggan = new pelanggan();
-        $pelanggan->KodePelanggan = $request->input('KodePelanggan');
-        $pelanggan->NamaPelanggan = $request->input('NamaPelanggan');
-        $pelanggan->Kontak = $request->input('Kontak');
-        $pelanggan->Handphone = $request->input('Handphone');
-        $pelanggan->Email = $request->input('Email');
-        $pelanggan->NIK = $request->input('NIK');
-        $pelanggan->Status = "OPN";
+        $pelanggan->KodePelanggan = $request->KodePelanggan;
+        $pelanggan->NamaPelanggan = $request->NamaPelanggan;
+        $pelanggan->Kontak = $request->Kontak;
+        $pelanggan->Handphone = $request->Handphone;
+        $pelanggan->Email = $request->Email;
+        $pelanggan->NIK = $request->NIK;
+        $pelanggan->NPWP = $request->NPWP;
+        $pelanggan->Status = 'OPN';
+        $pelanggan->created_at = \Carbon\Carbon::now();
+        $pelanggan->updated_at = \Carbon\Carbon::now();
         $pelanggan->save();
+
+        foreach ($alamats as $key => $value) {
+            DB::table('alamatpelanggans')->insert([
+                'KodePelanggan' => $request->KodePelanggan,
+                'Alamat' => $alamats[$key],
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+        }
+
         return redirect('/datapelanggan');
     }
 

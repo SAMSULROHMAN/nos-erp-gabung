@@ -33,6 +33,7 @@
                                     <th>Negara</th>
                                     <th>Telepon</th>
                                     <th>Email</th>
+                                    <th>Tahun Masuk</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -48,13 +49,19 @@
                                         <td>{{ $k->Negara }}</td>
                                         <td>{{ $k->Telepon }}</td>
                                         <td>{{ $k->Email }}</td>
+                                        <td>{{ $k->tahunmasuk }}</td>
                                         <td>
-                                            <a href="{{ route('/datakaryawan/edit',$k->IDKaryawan)}}" class="btn btn-warning">
+                                            <a href="{{ route('datakaryawan.edit',$k->IDKaryawan)}}" class="btn btn-warning">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i> Edit
                                             </a>
-                                            <a href="{{ route('/datakaryawan/destroy',$k->IDKaryawan)}}" class="btn btn-danger">
-                                                <i class="fa fa-trash" aria-hidden="true"></i> Hapus
-                                            </a>
+
+                                            <form action="{{ route('datakaryawan.destroy',$k->IDKaryawan)}}" method="post">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-md btn-danger">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i> Hapus
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

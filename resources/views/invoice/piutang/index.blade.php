@@ -21,14 +21,25 @@
                             </thead>
                             <tbody>
                                 @foreach ($invoice as $stokmasuk)
-                                    <tr>
-                                        <td>{{ $stokmasuk->NamaPelanggan}}</td>
-                                        <td>{{ $stokmasuk->KodeInvoicePiutangShow}}</td>
-                                        <td>{{ $stokmasuk->Tanggal}}</td>
-                                        <td>{{ $stokmasuk->Subtotal}}</td>
-                                        <td>{{ $stokmasuk->bayar}}</td>
-                                        <td>{{ $stokmasuk->Subtotal - $stokmasuk->bayar}}</td>
-                                    </tr>
+                                    @if ($stokmasuk->Subtotal == $stokmasuk->bayar || \Carbon\Carbon::parse($stokmasuk->Tanggal)->addDays($stokmasuk->Term) > \Carbon\Carbon::now())
+                                        <tr class="success">
+                                            <td>{{ $stokmasuk->NamaPelanggan}}</td>
+                                            <td>{{ $stokmasuk->KodeInvoicePiutangShow}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($stokmasuk->Tanggal)->format('d-m-Y') }}</td>
+                                            <td>{{ $stokmasuk->Subtotal }}</td>
+                                            <td>{{ $stokmasuk->bayar }}</td>
+                                            <td>{{ $stokmasuk->Subtotal - $stokmasuk->bayar}}</td>
+                                        </tr>
+                                    @else
+                                        <tr class="danger">
+                                            <td>{{ $stokmasuk->NamaPelanggan}}</td>
+                                            <td>{{ $stokmasuk->KodeInvoicePiutangShow}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($stokmasuk->Tanggal)->format('d-m-Y') }}</td>
+                                            <td>{{ $stokmasuk->Subtotal }}</td>
+                                            <td>{{ $stokmasuk->bayar }}</td>
+                                            <td>{{ $stokmasuk->Subtotal - $stokmasuk->bayar}}</td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>

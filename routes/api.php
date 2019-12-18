@@ -16,4 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('stok', 'KartuStokController@api')->name('api.stok');
+Route::get('gudang','DataGudangController@getDataGudang')->name('gudang');
+Route::get('stok', 'KartuStokController@api')->name('stok');
+Route::get('invoice','InvoiceController@getPiutangData')->name('api.invoice');
+Route::get('/popembelianOPN', 'PemesananPembelianController@apiOPN')->name('api.popembelianOPN');
+Route::get('api/popembelianCFM', 'PemesananPembelianController@apiCFM')->name('api.popembelianCFM');
+Route::get('api/popembelianDEL', 'PemesananPembelianController@apiDEL')->name('api.popembelianDEL');
+Route::get('api/popembelianCLS', 'PemesananPembelianController@apiCLS')->name('api.popembelianCLS');

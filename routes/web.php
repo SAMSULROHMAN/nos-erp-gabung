@@ -94,10 +94,7 @@ Route::group(['middleware' => 'auth'], function() {
   Route::post('/popembelian/confirm/{id}', 'PemesananPembelianController@confirm');
   Route::post('/popembelian/cancel/{id}', 'PemesananPembelianController@cancel');
   Route::post('/popembelian/print/{id}','PemesananPembelianController@print');
-  Route::get('api/popembelianOPN', 'PemesananPembelianController@apiOPN')->name('api.popembelianOPN');
-  Route::get('api/popembelianCFM', 'PemesananPembelianController@apiCFM')->name('api.popembelianCFM');
-  Route::get('api/popembelianDEL', 'PemesananPembelianController@apiDEL')->name('api.popembelianDEL');
-  Route::get('api/popembelianCLS', 'PemesananPembelianController@apiCLS')->name('api.popembelianCLS');
+
 
   //route penerimaan barang
   Route::get('/penerimaanBarang', 'PenerimaanBarangController@index');
@@ -171,5 +168,6 @@ Route::group(['middleware' => 'auth'], function() {
   Route::get('/pelunasanpiutang/payment/{id}','PelunasanController@payment');
   Route::get('/pelunasanpiutang/payment/{id}/add','PelunasanController@addpayment');
   Route::post('/pelunasanpiutang/payment/{id}/add','PelunasanController@addpaymentpost');
+    Route::get('stok', 'KartuStokController@api')->name('stok');
 
 });

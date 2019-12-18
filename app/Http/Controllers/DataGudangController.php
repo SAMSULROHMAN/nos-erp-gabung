@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\lokasi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use DataTables;
 
 class DataGudangController extends Controller
 {
@@ -19,7 +20,7 @@ class DataGudangController extends Controller
     public function index(Request $request)
     {
         // untuk menampilkan data gudang
-        $lokasi = lokasi::where('Status','OPN')->paginate(5);
+        // $lokasi = lokasi::where('Status','OPN')->paginate(5);
         // logika untuk pencarian data
         // butuh logika enkapsulasi dan abstraksi
 
@@ -28,24 +29,30 @@ class DataGudangController extends Controller
             1.definisikan request data yang ingin direquest
             2.gunakan Eloquent , Query Builder, atau SQL Syntax untuk melakukan logika pencarian
         **/
-        $search = $request->get('keyword');
-        if($search){
-          $lokasi = lokasi::where('NamaLokasi','LIKE',"%$search%")
-          ->orWhere('KodeLokasi','LIKE',"%$search%")
-          ->orWhere('Tipe','LIKE',"%$search%")
-          ->paginate(5);
-        }
-        return view('master.dataGudang',['lokasi' => $lokasi]);
+        // $search = $request->get('keyword');
+        // if($search){
+        //   $lokasi = lokasi::where('NamaLokasi','LIKE',"%$search%")
+        //   ->orWhere('KodeLokasi','LIKE',"%$search%")
+        //   ->orWhere('Tipe','LIKE',"%$search%")
+        //   ->paginate(5);
+        // }
+        return view('master.dataGudang');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function getDataGudang()
+    {
+        $lokasi = lokasi::where('Status','OPN')->get();
+        return DataTables::of($lokasi)
+                ->addColumn('Opsi',function($lokasi){
+                    return '<a href="datagudang/edit,'.$lokasi->KodeLokasi.'" class="btn-xs btn btn-warning">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit
+                    </a>';
+                })
+                ->make(true);
+    }
     public function create()
     {
-        $last_id = DB::select('SELECT * FROM lokasis ORDER BY KodeLokasi DESC LIMIT 1');
+        $last_id = DB::select('SELECT KodeLokasi FROM lokasis ORDER BY KodeLokasi DESC LIMIT 1');
 
         //Auto generate ID
         if($last_id == null) {

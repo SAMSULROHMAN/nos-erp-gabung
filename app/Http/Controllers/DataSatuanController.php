@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\satuan;
+use App\Model\satuan;
 use Illuminate\Support\Facades\DB;
 
 class DataSatuanController extends Controller

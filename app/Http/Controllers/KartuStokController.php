@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use DB;
 use App\Model\keluarmasukbarang;
 use App\Model\lokasi;
 use App\Model\satuan;
+use Yajra\DataTables\DataTables;
 use PDF;
 
 class KartuStokController extends Controller
@@ -15,11 +15,11 @@ class KartuStokController extends Controller
     public function index()
     {
         //$stok = keluarmasukbarang::get();
-        $stok = DB::table('keluarmasukbarangs')
-            ->join('items', 'keluarmasukbarangs.KodeItem', '=', 'items.KodeItem')
-            ->join('lokasis', 'keluarmasukbarangs.KodeLokasi', '=', 'lokasis.KodeLokasi')
-            ->select('keluarmasukbarangs.*', 'items.NamaItem', 'lokasis.NamaLokasi')
-            ->get();
+        // $stok = DB::table('keluarmasukbarangs')
+        //     ->join('items', 'keluarmasukbarangs.KodeItem', '=', 'items.KodeItem')
+        //     ->join('lokasis', 'keluarmasukbarangs.KodeLokasi', '=', 'lokasis.KodeLokasi')
+        //     ->select('keluarmasukbarangs.*', 'items.NamaItem', 'lokasis.NamaLokasi')
+        //     ->get();
         // $store = lokasi::where('Status', 'OPN')->get();
         // $item = DB::select("SELECT s.KodeItem, s.NamaItem, k.HargaJual, t.NamaSatuan, s.Keterangan FROM items s
         //     inner join itemkonversis k on k.KodeItem = s.KodeItem
@@ -27,7 +27,7 @@ class KartuStokController extends Controller
         // $satuan = satuan::get();
         // $filter = false;
         // return view('kartustok.index', compact('stok', 'store', 'item', 'satuan', 'filter'));
-        return view('kartustok.index', compact('stok'));
+        return view('kartustok.index');
     }
 
     public function filter(Request $request)
@@ -72,7 +72,7 @@ class KartuStokController extends Controller
         $stok = DB::table('keluarmasukbarangs')
             ->join('items', 'keluarmasukbarangs.KodeItem', '=', 'items.KodeItem')
             ->join('lokasis', 'keluarmasukbarangs.KodeLokasi', '=', 'lokasis.KodeLokasi')
-            ->select('keluarmasukbarangs.*', 'items.NamaItem', 'lokasis.NamaLokasi')
+            ->select(['keluarmasukbarangs.*', 'items.NamaItem', 'lokasis.NamaLokasi'])
             ->get();
 
         return Datatables::of($stok)->make(true);

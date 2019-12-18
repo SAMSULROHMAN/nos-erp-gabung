@@ -10,6 +10,6 @@ class stokmasuk extends Model
 
     public function lokasi()
     {
-        return $this->hasMany('App\lokasi');
+        return $this->hasMany('App\lokasi','KodeLokasi');
     }
 }

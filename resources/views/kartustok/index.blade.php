@@ -28,27 +28,24 @@
         </div>
     </div>
 </div>
-@endsection
-@section('scripts')
 
-
-
-<script type="text/javascript">
-    var table = $('#stok').DataTable({
+{{-- <script type="text/javascript">
+    $('#stok').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('api.stok') }}",
-        columns: [{
+        ajax: '{{ route("stok") }}',
+        columns: [
+            {
                 data: 'Tanggal',
                 name: 'Tanggal'
             },
             {
                 data: 'NamaItem',
-                name: 'NamaItem'
+                name: 'items.NamaItem'
             },
             {
                 data: 'NamaLokasi',
-                name: 'NamaLokasi'
+                name: 'lokasis.NamaLokasi'
             },
             {
                 data: 'JenisTransaksi',
@@ -68,6 +65,44 @@
             }
         ]
     });
-</script>
-
+</script> --}}
+@endsection
+@section('scripts')
+    <script type="text/javascript">
+        $('#stok').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("stok") }}',
+            columns: [
+                {
+                    data: 'Tanggal',
+                    name: 'Tanggal'
+                },
+                {
+                    data: 'NamaItem',
+                    name: 'items.NamaItem'
+                },
+                {
+                    data: 'NamaLokasi',
+                    name: 'lokasis.NamaLokasi'
+                },
+                {
+                    data: 'JenisTransaksi',
+                    name: 'JenisTransaksi'
+                },
+                {
+                    data: 'KodeTransaksi',
+                    name: 'KodeTransaksi'
+                },
+                {
+                    data: 'Qty',
+                    name: 'Qty'
+                },
+                {
+                    data: 'saldo',
+                    name: 'saldo'
+                }
+            ]
+        });
+    </script>
 @endsection

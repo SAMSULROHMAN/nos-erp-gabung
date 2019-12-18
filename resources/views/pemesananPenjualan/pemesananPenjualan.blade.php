@@ -79,9 +79,9 @@
                         <td>{{ \Carbon\Carbon::parse($p->Tanggal)->format('d-m-Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($p->tgl_kirim)->format('d-m-Y') }}</td>
                         <td>{{ $p->Expired }}</td>
-                        <td>{{ $p->KodeMataUang}}</td>
-                        <td>{{ $p->KodeLokasi}}</td>
-                        <td>{{ $p->KodePelanggan}}</td>
+                        <td>{{ $p->NamaMataUang }}</td>
+                        <td>{{ $p->NamaLokasi  }}</td>
+                        <td>{{ $p->NamaPelanggan }}</td>
                         <td>{{ $p->term }}</td>
                         <td>
                           <a href="{{ url('/sopenjualan/show/'. $p->KodeSO )}}" class="btn-sm btn btn-primary">

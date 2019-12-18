@@ -63,9 +63,9 @@
                     @foreach ($suratjalans as $suratjalan)
                     <tr>
                         <td>{{ $suratjalan->KodeSO}}</td>
-                        <td>{{ $suratjalan->KodePelanggan}}</td>
-                        <td>{{ $suratjalan->Tanggal }}</td>
-                        <td>{{ $suratjalan->KodeLokasi}}</td>
+                        <td>{{ $suratjalan->NamaPelanggan}}</td>
+                        <td>{{ \Carbon\Carbon::parse($suratjalan->Tanggal)->format('d-m-Y') }}</td>
+                        <td>{{ $suratjalan->NamaLokasi}}</td>
                         <td>
                             <a href="{{ url('/suratJalan/show/'.$suratjalan->KodeSuratJalanID) }}" class="btn-sm btn btn-primary">
                                 <i class="fa fa-eye" aria-hidden="true"></i>

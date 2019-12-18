@@ -28,7 +28,7 @@
               @foreach ($suratjalanreturns as $suratjalan)
                 <tr>
                     <td>{{ $suratjalan->KodeSuratJalanReturn}}</td>
-                    <td>{{ $suratjalan->Tanggal }}</td>
+                    <td>{{ \Carbon\Carbon::parse($suratjalan->Tanggal)->format('d-m-Y') }}</td>
                     <td>
                         <a href="{{ url('/returnSuratJalan/view/'.$suratjalan->KodeSuratJalanReturnId ) }}" class="btn-sm btn btn-primary">
                             <i class="fa fa-eye" aria-hidden="true"></i>

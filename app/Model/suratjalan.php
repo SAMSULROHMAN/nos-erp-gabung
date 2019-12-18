@@ -16,7 +16,7 @@ class suratjalan extends Model
 
     public function uang()
     {
-        return $this->belongsTo('App\Model\matauang', 'KodeMataUang', 'KodeMataUang');
+        return $this->belongsTo('App\Model\matauang', 'KodeMataUang');
     }
 
     public function gudang()

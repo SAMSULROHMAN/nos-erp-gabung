@@ -13,16 +13,16 @@ class pemesananpenjualan extends Model
 
     public function lokasi()
     {
-        return $this->belongsTo('App\Model\lokasi');
+        return $this->belongsTo('App\Model\lokasi','KodeLokasi');
     }
 
     public function matauang()
     {
-        return $this->belongsTo('App\Model\matauang');
+        return $this->belongsTo('App\Model\matauang','KodeMataUang');
     }
 
     public function pelanggan()
     {
-        return $this->belongsTo('App\Model\pelanggan');
+        return $this->belongsTo('App\Model\pelanggan','KodePelanggan');
     }
 }

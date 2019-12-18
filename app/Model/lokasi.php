@@ -11,8 +11,13 @@ class lokasi extends Model
     public $incrementing = false;
     protected $fillable = ['KodeLokasi', 'NamaLokasi', 'Tipe'];
 
+    public function pemesananpenjualan()
+    {
+        return $this->hasMany('App\Model\pemesananpenjualan','KodeLokasi');
+    }
+
     public function penjualan()
     {
-        return $this->hasMany('App\Penjualan');
+        return $this->hasMany('App\Model\Penjualan','KodeLokasi');
     }
 }

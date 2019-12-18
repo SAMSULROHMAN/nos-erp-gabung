@@ -9,10 +9,10 @@
                     </div>
                     <div class="x_content">
                         @foreach($supplier as $sup)
-                        <form action="{{ route('/datasupplier/update',$sup->KodeSupplier)}}" method="post">
+                        <form action="{{ route('datasupplier.update',$sup->KodeSupplier)}}" method="post">
 
-                          @method('PUT')
-                        @csrf
+                            @method('PUT')
+                            @csrf
                             <div class="form-group">
                                 <label>Kode Supplier: </label>
                                 <input readonly type="text" value="{{ $sup->KodeSupplier }}" name="KodeSupplier" required="required" placeholder="Kode Supplier" class="form-control">

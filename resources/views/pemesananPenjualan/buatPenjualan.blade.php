@@ -41,19 +41,29 @@
                                 <input type="hidden" class="form-control idp" name="KodeSO" value="{{$newIDP}}">
                                 <div class="form-group">
                                     <label for="inputDate">Tanggal</label>
-                                    <input type="date" required="required" class="form-control" name="Tanggal" id="inputDate">
+                                    <div class="input-group date" id="inputDate">
+                                        <input type="text"  class="form-control" name="Tanggal" id="inputDate">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputDate2">Tanggal Kirim</label>
-                                    <input type="date" required="required" class="form-control" name="TanggalKirim" id="inputDate2">
+                                    <div class="input-group date" id="inputDate2">
+                                        <input type="text"  class="form-control" name="TanggalKirim" id="inputDate2">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputBerlaku">Masa Berlaku</label>
-                                    <input type="text" required="required" class="form-control" name="Expired" id="inputBerlaku" placeholder="/hari">
+                                    <input type="text"  class="form-control" name="Expired" id="inputBerlaku" placeholder="/hari">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputTerm">Term</label>
-                                    <input type="text" required="required" class="form-control" name="Term" id="inputTerm" placeholder="/hari">
+                                    <label for="inputTerm">Term of Payment</label>
+                                    <input type="text"  class="form-control" name="Term" id="inputTerm" placeholder="/hari">
                                 </div>
                             </div>
                             <!-- pembatas -->
@@ -62,7 +72,7 @@
                             <div class="form-group col-md-4">
                                 <div class="form-group">
                                     <label for="inputMatauang">Mata Uang</label>
-                                    <select class="form-control" required="required" name="KodeMataUang" id="inputMatauang" placeholder="Pilih mata uang">
+                                    <select class="form-control"  name="KodeMataUang" id="inputMatauang" placeholder="Pilih mata uang">
                                         @foreach($matauang as $mu)
                                         <option value="{{$mu->KodeMataUang}}">{{$mu->NamaMataUang}}</option>
                                         @endforeach
@@ -70,7 +80,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputGudang">Gudang</label>
-                                    <select class="form-control" required="required" name="KodeLokasi" id="inputGudang">
+                                    <select class="form-control"  name="KodeLokasi" id="inputGudang">
                                         @foreach($lokasi as $lok)
                                         <option value="{{$lok->KodeLokasi}}">{{$lok->NamaLokasi}}</option>
                                         @endforeach
@@ -86,7 +96,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPelanggan">Diskon</label>
-                                    <input type="number" onchange="disc()" class="diskon form-control" required="required" name="diskon" id="inputBerlaku" placeholder="%">
+                                    <input type="number" onchange="disc()" class="diskon form-control"  name="diskon" id="inputBerlaku" placeholder="%">
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPelanggan">PPn</label>
@@ -101,7 +111,7 @@
                             <!-- column 3 -->
                             <div class="form-group col-md-3">
                                 <label for="inputKeterangan">Keterangan</label>
-                                <textarea required="required" class="form-control" name="Keterangan" id="inputKeterangan" rows="5"></textarea>
+                                <textarea  class="form-control" name="Keterangan" id="inputKeterangan" rows="5"></textarea>
                                 <br><br>
 
                             </div>
@@ -137,7 +147,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="number" onchange="qty(1)" name="qty[]" class="form-control qtyj qty1" required="required" value="0">
+                                            <input type="number" onchange="qty(1)" name="qty[]" class="form-control qtyj qty1"  value="0">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control satuan1" required="" value="0">
@@ -178,6 +188,15 @@
 @endsection
 @section('scripts')
 <script type="text/javascript">
+    $('#inputDate').datetimepicker({
+      defaultDate: new Date(),
+      format: 'DD-MM-YYYY'
+    });
+
+    $('#inputDate2').datetimepicker({
+      defaultDate: new Date(),
+      format: 'DD-MM-YYYY'
+    });
     $('#item').select2();
     var item =$(".item"+1).val();
     var sat =$("#"+item+"Sat").val();

@@ -12,7 +12,7 @@
                         @csrf
                             <div class="form-group">
                                 <label>Kode Gudang: </label>
-                                <input readonly type="text" value="{{$newID}}" required="required" name="KodeLokasi" placeholder="Kode Gudang" class="form-control">
+                                <input type="text" value="{{$newID}}" required="required" name="KodeLokasi" placeholder="Kode Gudang" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nama Gudang: </label>

@@ -30,12 +30,12 @@
                   @foreach ($pemesananpenjualan as $p)
                     <tr>
                         <td>{{ $p->KodeSO}}</td>
-                        <td>{{ $p->Tanggal}}</td>
-                        <td>{{ $p->tgl_kirim}}</td>
+                        <td>{{ $p->Tanggal }}</td>
+                        <td>{{ $p->tgl_kirim }}</td>
                         <td>{{ $p->Expired }}</td>
-                        <td>{{ $p->KodeMataUang}}</td>
-                        <td>{{ $p->KodeLokasi}}</td>
-                        <td>{{ $p->KodePelanggan}}</td>
+                        <td>{{ $p->NamaMataUang }}</td>
+                        <td>{{ $p->NamaLokasi }}</td>
+                        <td>{{ $p->NamaPelanggan}}</td>
                         <td>{{ $p->term }}</td>
                         <td>
                           <a href="/sopenjualan/show/{{ $p->KodeSO }}" class="btn-sm btn btn-primary">

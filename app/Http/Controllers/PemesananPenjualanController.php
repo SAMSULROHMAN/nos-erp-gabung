@@ -22,10 +22,13 @@ class PemesananPenjualanController extends Controller
      */
     public function index()
     {
-        // $date = date('Y-m-d');
-        // $mulai = $date;
-        // $sampai = $date;
-        $pemesananpenjualan = DB::table('pemesananpenjualans')->where('Status','OPN')->get();
+        $pemesananpenjualan = pemesananpenjualan::join('lokasis','lokasis.KodeLokasi','=','pemesananpenjualans.KodeLokasi')
+        ->join('matauangs','matauangs.KodeMataUang','=','pemesananpenjualans.KodeMataUang')
+        ->join('pelanggans','pelanggans.KodePelanggan','=','pemesananpenjualans.KodePelanggan')
+        ->select('pemesananpenjualans.*','lokasis.NamaLokasi','matauangs.NamaMataUang','pelanggans.NamaPelanggan')
+        ->get();
+        $pemesananpenjualan = $pemesananpenjualan->where('Status','OPN');
+        $pemesananpenjualan->all();
         return view('pemesananPenjualan.pemesananPenjualan',compact('pemesananpenjualan'));
     }
 
@@ -104,52 +107,52 @@ class PemesananPenjualanController extends Controller
      */
     public function store(Request $request)
     {
+        // $this->validate($request, [
+        //     'KodeSO' => 'required',
+        //     'Tanggal' => 'required',
+        //     'TanggalKirim' => 'required',
+        //     'Expired' => 'required',
+        //     'KodeMataUang' => 'required',
+        //     'KodeLokasi' => 'required',
+        //     'KodePelanggan' => 'required',
+        //     'Term' => 'required',
+        // ]);
 
-
-        $this->validate($request, [
-            'KodeSO' => 'required',
-            'Tanggal' => 'required',
-            'TanggalKirim' => 'required',
-            'Expired' => 'required',
-            'KodeMataUang' => 'required',
-            'KodeLokasi' => 'required',
-            'KodePelanggan' => 'required',
-            'Term' => 'required',
-        ]);
-
-        DB::table('pemesananpenjualans')->insert([
-            'KodeSO' => $request->KodeSO,
-            'Tanggal' => $request->Tanggal,
-            'tgl_kirim' => $request->TanggalKirim,
-            'Expired' => $request->Expired,
-            'KodeLokasi' => $request->KodeLokasi,
-            'KodeMataUang' => $request->KodeMataUang,
-            'KodePelanggan' => $request->KodePelanggan,
-            'Term' => $request->Term,
-            'Keterangan' => $request->Keterangan,
-            'Status' => 'OPN',
-            'KodeUser' => 'Admin',
-            'Total' => $request->subtotal,
-            'PPN' => $request->ppn,
-            'NilaiPPN'=>$request->ppnval,
-            'Printed'=>0,
-            'Diskon'=>$request->diskon,
-            'NilaiDiskon'=>$request->diskonval,
-            'Subtotal'=>$request->subtotal-$request->ppnval,
-            'KodeSales'=>0,
-            'POPelanggan'=>$request->po,
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
-        ]);
+        // DB::table('pemesananpenjualans')->insert([
+        //     'KodeSO' => $request->KodeSO,
+        //     'Tanggal' => $request->Tanggal,
+        //     'tgl_kirim' => $request->TanggalKirim,
+        //     'Expired' => $request->Expired,
+        //     'KodeLokasi' => $request->KodeLokasi,
+        //     'KodeMataUang' => $request->KodeMataUang,
+        //     'KodePelanggan' => $request->KodePelanggan,
+        //     'Term' => $request->Term,
+        //     'Keterangan' => $request->Keterangan,
+        //     'Status' => 'OPN',
+        //     'KodeUser' => 'Admin',
+        //     'Total' => $request->subtotal,
+        //     'PPN' => $request->ppn,
+        //     'NilaiPPN'=>$request->ppnval,
+        //     'Printed'=>0,
+        //     'Diskon'=>$request->diskon,
+        //     'NilaiDiskon'=>$request->diskonval,
+        //     'Subtotal'=>$request->subtotal-$request->ppnval,
+        //     'KodeSales'=>0,
+        //     'POPelanggan'=>$request->po,
+        //     'created_at' => \Carbon\Carbon::now(),
+        //     'updated_at' => \Carbon\Carbon::now(),
+        // ]);
 
         $items = $request->item;
+        // dd($items);
         $qtys = $request->qty;
         $prices = $request->price;
         $totals = $request->total;
+        // dd($items,$qtys,$prices,$totals);
         foreach ($items as $key => $value) {
             DB::table('pemesanan_penjualan_detail')->insert([
                 'KodeSO' => $request->KodeSO,
-                'KodeItem'=>$items[$key],
+                'KodeItem'=> $items[$key],
                 'Qty' => $qtys[$key],
                 'Harga' => $prices[$key],
                 'NoUrut' => 0,
@@ -158,7 +161,7 @@ class PemesananPenjualanController extends Controller
                 'updated_at' => \Carbon\Carbon::now(),
             ]);
 
-        }
+         }
         return redirect('/sopenjualan');
     }
 
@@ -293,7 +296,14 @@ class PemesananPenjualanController extends Controller
     }
 
     public function konfirmasiPenjualan(){
-        $pemesananpenjualan =pemesananpenjualan::all()->where('Status','CFM');
+        //$pemesananpenjualan = pemesananpenjualan::all()->where('Status','CFM');
+        $pemesananpenjualan = pemesananpenjualan::join('lokasis','lokasis.KodeLokasi','=','pemesananpenjualans.KodeLokasi')
+        ->join('matauangs','matauangs.KodeMataUang','=','pemesananpenjualans.KodeMataUang')
+        ->join('pelanggans','pelanggans.KodePelanggan','=','pemesananpenjualans.KodePelanggan')
+        ->select('pemesananpenjualans.*','lokasis.NamaLokasi','matauangs.NamaMataUang','pelanggans.NamaPelanggan')
+        ->get();
+        $pemesananpenjualan = $pemesananpenjualan->where('Status','CFM');
+        $pemesananpenjualan->all();
         $filter = false;
         return view('pemesananPenjualan.listkonfirmasi',compact('pemesananpenjualan', 'filter'));
     }

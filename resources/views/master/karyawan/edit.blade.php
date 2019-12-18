@@ -9,7 +9,8 @@
                     </div>
                     <div class="x_content">
                         @foreach($karyawan as $k)
-                        <form action="{{ route('/datakaryawan/update',$k->IDKaryawan)}}" method="post">
+                        <form action="{{ route('datakaryawan.update',$k->IDKaryawan)}}" method="post">
+                            @method('PUT')
                             @csrf
                             <div class="form-group">
                                 <label>Kode Karyawan: </label>
@@ -56,7 +57,11 @@
                             </div>
                             <div class="form-group">
                                 <label>E-mail: </label>
-                                <input type="text" required="required" name="Email" placeholder="E-mail" class="form-control" value="{{ $k->Email }}">
+                                <input type="text" name="Email" placeholder="E-mail" class="form-control" value="{{ $k->Email }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Tahun Masuk</label>
+                                <input type="text" name="tahunmasuk" id="" class="form-control" value="{{ $k->tahunmasuk }}">
                             </div>
                             <button class="btn btn-success">Simpan</button>
                         </form>

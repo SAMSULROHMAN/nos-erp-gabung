@@ -35,16 +35,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @if (isset($lokasi))
+                    {{-- @if (isset($lokasi))
                       @foreach($lokasi as $lok)
                         <tr>
                         <td>{{$lok->KodeLokasi}}</td>
                         <td>{{$lok->NamaLokasi}}</td>
                         <td>{{$lok->Tipe}}</td>
                         <td>
-                          {{-- <a href="/datagudang/show/{{ $lok->KodeLokasi }}" class="btn-xs btn btn-primary">
-                            <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Lihat
-                          </a> --}}
                           <a href="{{ route('datagudang.edit',$lok->KodeLokasi)}}" class="btn-xs btn btn-warning">
                             <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit
                           </a>
@@ -53,9 +50,6 @@
                             @csrf
                             <button type="submit" class="btn btn-xs btn-danger">Delete</button>
                           </form>
-                          <!-- <a href="{{ route('datagudang.destroy',$lok->KodeLokasi)}}" class="btn-xs btn btn-danger">
-                            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Hapus
-                          </a> -->
                         </td>
                       </tr>
                       @endforeach
@@ -65,12 +59,12 @@
                             <p>Tidak Ada Data</p>
                           </td>
                       </tr>
-                    @endif
+                    @endif --}}
                 </tbody>
               </table>
-              <div class="pull-left">
+              {{-- <div class="pull-left">
                 {{ $lokasi->links() }}
-              </div>
+              </div> --}}
           </div>
         </div>
       </div>
@@ -78,9 +72,19 @@
   </div>
 @endsection
 @section('scripts')
-<!-- <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function(){
-      $('#gudang_table').DataTable();
+      $('#gudang_table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route('gudang')}}',
+            columns: [
+                {data: 'KodeLokasi', name: 'KodeLokasi'},
+                {data: 'NamaLokasi', name: 'NamaLokasi'},
+                {data: 'Tipe', name: 'Tipe'},
+                {data: 'Opsi', name: 'Opsi', orderable: false, searchable: false}
+            ]
+      });
     });
-</script> -->
+</script>
 @endsection

@@ -152,7 +152,7 @@ class PemesananPembelianController extends Controller
         $prices = $request->price;
         $totals = $request->total;
         foreach ($items as $key => $value) {
-            DB::table('pemesananpembeliandetails')->insert([
+            DB::table('pemesananpemebeliandetails')->insert([
                 'KodePO' => $request->KodePO,
                 'KodeItem' => $items[$key],
                 'Qty' => $qtys[$key],
@@ -197,7 +197,7 @@ class PemesananPembelianController extends Controller
             inner join satuans d on c.KodeSatuan = d.KodeSatuan
             where a.KodePO ='" . $id . "' ");
         $OPN = true;
-        // dd($items);
+         dd($items);
 
         return view('pemesananpembelian.lihat', compact('data', 'id', 'items', 'OPN'));
     }
@@ -221,7 +221,7 @@ class PemesananPembelianController extends Controller
     }
 
     public function print($id)
-    {   
+    {
         $data = pemesananpembelian::where('KodePO', $id)->get();
         $items = DB::select("SELECT a.KodeItem,i.NamaItem, SUM(a.Qty) as jml, i.Keterangan, s.NamaSatuan, k.HargaBeli FROM pemesananpembeliandetails a inner join items i on a.KodeItem = i.KodeItem inner join itemkonversis k on i.KodeItem = k.KodeItem inner join satuans s on s.KodeSatuan = k.KodeSatuan where a.KodePO='".$data[0]->KodePO."' group by a.KodeItem, i.Keterangan, s.NamaSatuan, k.HargaBeli, i.NamaItem ");
         $lokasi = lokasi::where('KodeLokasi', $data[0]->KodeLokasi)->get();
@@ -233,7 +233,7 @@ class PemesananPembelianController extends Controller
         $data->Tanggal = Carbon::parse($data[0]->Tanggal)->format('d/m/Y');
 
         $pdf = PDF::loadview('pemesananPembelian.print',compact('data', 'id', 'items', 'jml', 'supplier', 'lokasi'));
-        
+
         return $pdf->download('pemesananPembelian.pdf');
     }
 

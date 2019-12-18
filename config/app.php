@@ -181,7 +181,9 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-
+        SanderVanHooft\Invoicable\InvoicableServiceProvider::class,
+        Anouar\Fpdf\FpdfServiceProvider::class,
+        Elibyy\TCPDF\ServiceProvider::class
     ],
 
     /*
@@ -238,6 +240,9 @@ return [
         'PDFSnappy' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Fpdf' => Anouar\Fpdf\Facades\Fpdf::class,
+        'TCPDF' => Elibyy\TCPDF\Facades\TCPDF::class
 
     ],
 

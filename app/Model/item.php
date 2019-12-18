@@ -13,16 +13,16 @@ class item extends Model
 
     public function kategori()
     {
-        return $this->belongsTo('App\kategori');
+        return $this->belongsTo('App\kategori','KodeKategori');
     }
 
     public function satuan()
     {
-        return $this->belongsTo('App\satuan');
+        return $this->belongsTo('App\satuan','KodeSatuan');
     }
 
     public function itemkonversi()
     {
-        return $this->belongsToMany('App\itemkonversi');
+        return $this->belongsToMany('App\itemkonversi','KodeSatuan');
     }
 }

@@ -58,7 +58,6 @@ class KaryawanController extends Controller
             'Kota' => 'required',
             'Propinsi' => 'required',
             'Jabatan' => 'required',
-            'Email' => 'required',
             'Telepon' => 'required',
         ]);
 
@@ -74,7 +73,8 @@ class KaryawanController extends Controller
             'JenisKelamin' => $request->JenisKelamin,
             'KodeUser' => 'Admin',
             'Status' => 'OPN',
-            'Jabatan' => $request->Jabatan
+            'Jabatan' => $request->Jabatan,
+            'tahunmasuk' => $request->tahunmasuk
         ]);
 
         return redirect('/datakaryawan');
@@ -112,20 +112,17 @@ class KaryawanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'KodeKaryawan'=> 'required',
-            'Nama' => 'required',
-            'Alamat' => 'required',
-            'Kota' => 'required',
-            'Propinsi' => 'required',
-            'Jabatan' => 'required',
-            'Email' => 'required',
-            'Telepon' => 'required',
-        ]);
+        // $this->validate($request,[
+        //     'KodeKaryawan'=> 'required',
+        //     'Nama' => 'required',
+        //     'Alamat' => 'required',
+        //     'Kota' => 'required',
+        //     'Propinsi' => 'required',
+        //     'Jabatan' => 'required',
+        //     'Telepon' => 'required',
+        // ]);
 
-        //$karyawan = karyawan::find($id);
-
-        // karyawan::update([
+        // $tahun = DB::table('karyawan')->where('IDKaryawan',$request->IDKaryawan)->update([
         //     'KodeKaryawan' => $request->KodeKaryawan,
         //     'Nama' => $request->NamaKaryawan,
         //     'Alamat' => $request->Alamat,
@@ -138,24 +135,26 @@ class KaryawanController extends Controller
         //     'Status' => 'OPN',
         //     'Jabatan' => $request->Jabatan,
         //     'JenisKelamin' => $request->JenisKelamin,
+        //     'tahunmasuk' => $request->tahunmasuk,
+        //     'updated_at' => \Carbon\Carbon::now()
         // ]);
-
-        DB::table('karyawan')->where('IDKaryawan',$request->IDKaryawan)->update([
+        $tahun = karyawan::find($id);
+        $tahun = karyawan::create([
             'KodeKaryawan' => $request->KodeKaryawan,
-            'Nama' => $request->NamaKaryawan,
+            'Nama' => $request->Nama,
             'Alamat' => $request->Alamat,
             'Kota' => $request->Kota,
             'Propinsi' => $request->Propinsi,
             'Negara' => $request->Negara,
             'Telepon' => $request->Telepon,
             'Email' => $request->Email,
-            'KodeUser' => $request->KodeUser,
+            'JenisKelamin' => $request->JenisKelamin,
+            'KodeUser' => 'Admin',
             'Status' => 'OPN',
             'Jabatan' => $request->Jabatan,
-            'JenisKelamin' => $request->JenisKelamin,
-            'updated_at' => \Carbon\Carbon::now()
+            'tahunmasuk' => $request->tahunmasuk
         ]);
-
+        dd($tahun);
         return redirect('/datakaryawan');
     }
 

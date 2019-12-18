@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class piutang extends Model
 {
-    protected $table = 'piutang';
+    protected $table = 'piutangs';
 }

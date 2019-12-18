@@ -124,12 +124,12 @@
                                         </td>
                                     </tr>
                                     @endforeach
-                                    
+
                                 </table>
-                                <div class="col-md-9">
+                                {{-- <div class="col-md-9">
                                     <a href="{{ url('/suratJalan/print/'.$id) }}"><button type="button" class="btn btn-primary"><i class="fa fa-print"></i></button></a>
-                                </div>
-                                <div class="col-md-3">
+                                </div> --}}
+                                {{-- <div class="col-md-3">
                                     <label for="inputPelanggan">Subtotal</label>
                                     <input type="hidden" value="{{sizeof($items)}}" name="" class="tot">
                                     <input type="text" readonly="" class="form-control befDis" id="inputBerlaku" placeholder="">
@@ -138,7 +138,7 @@
                                     <input type="hidden" name="diskonval" class="diskonval ">
                                     <label for="inputPelanggan">Total</label>
                                     <input type="text" readonly="" class="form-control subtotal" name="subtotal" id="inputBerlaku" placeholder="">
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </form>
@@ -148,7 +148,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    
+
     function refresh(val){
         var base ="{{ url('/') }}"+"/suratJalan/create/"+val.value;
         window.location.href = base;

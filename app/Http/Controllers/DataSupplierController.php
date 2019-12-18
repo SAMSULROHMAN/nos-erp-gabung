@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\supplier;
+use App\Model\supplier;
 use Illuminate\Support\Facades\DB;
 
 class DataSupplierController extends Controller
@@ -60,19 +60,27 @@ class DataSupplierController extends Controller
             'NamaSupplier'=> 'required',
             'Kontak'=> 'required',
             'Handphone'=> 'required',
-            'Alamat'=> 'required'
         ]);
 
+        $alamats = $request->alamat;
         DB::table('suppliers')->insert([
             'KodeSupplier' => $request->KodeSupplier,
             'NamaSupplier' => $request->NamaSupplier,
             'Kontak' => $request->Kontak,
             'Handphone' => $request->Handphone,
-            'Alamat' => $request->Alamat,
             'Status' => 'OPN',
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now()
         ]);
+
+        foreach ($alamats as $key => $value) {
+            DB::table('alamatsuppliers')->insert([
+                'KodeSupplier' => $request->KodeSupplier,
+                'Alamat' => $alamats[$key],
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+        }
         return redirect('/datasupplier');
 
         // supplier::create([

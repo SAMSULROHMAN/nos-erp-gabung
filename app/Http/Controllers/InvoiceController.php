@@ -7,15 +7,19 @@ use DB;
 use App\Model\invoicepiutang;
 use App\Model\invoicehutang;
 use App\Model\lokasi;
+use DataTables;
 
 class InvoiceController extends Controller
 {
     public function piutang()
     {
-        $invoice = DB::select('SELECT i.KodeInvoicePiutangShow, i.KodeInvoicePiutang, p.NamaPelanggan, i.Tanggal, d.Subtotal, COALESCE(sum(pp.Jumlah),0) as bayar FROM invoicepiutangs i inner join invoicepiutangdetails d on i.KodeInvoicePiutang = d.KodeInvoicePiutang inner join pelanggans p on p.KodePelanggan = i.KodePelanggan
-            left join pelunasanpiutangs pp on pp.KodeInvoice = i.KodeInvoicePiutang
-            GROUP by i.KodeInvoicePiutangShow, i.KodeInvoicePiutang, p.NamaPelanggan, i.Tanggal, d.Subtotal');
-        return view('invoice.piutang.index', compact('invoice'));
+        $invoice = DB::select('SELECT i.KodeInvoicePiutangShow, i.KodeInvoicePiutang, i.Term, p.NamaPelanggan, i.Tanggal, d.Subtotal,COALESCE(sum(pp.Jumlah),0) as bayar
+                    FROM invoicepiutangs i
+                    inner join invoicepiutangdetails d on i.KodeInvoicePiutang = d.KodeInvoicePiutang
+                    inner join pelanggans p on p.KodePelanggan = i.KodePelanggan
+                    left join pelunasanpiutangs pp on pp.KodeInvoice = i.KodeInvoicePiutang
+                    GROUP by i.KodeInvoicePiutangShow, i.KodeInvoicePiutang, p.NamaPelanggan, i.Tanggal, d.Subtotal, i.Term');
+        return view('invoice.piutang.index',compact('invoice'));
     }
 
     public function hutang()

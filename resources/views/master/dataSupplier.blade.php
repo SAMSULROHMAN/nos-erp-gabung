@@ -29,7 +29,6 @@
                             <tr>
                                 <th>Kode Supplier</th>
                                 <th>Nama Supplier</th>
-                                <th>Alamat</th>
                                 <th>Kontak</th>
                                 <th>Handphone</th>
                                 <th>Aksi</th>
@@ -40,14 +39,13 @@
                             <tr>
                                 <td>{{$sup->KodeSupplier}}</td>
                                 <td>{{$sup->NamaSupplier}}</td>
-                                <td>{{$sup->Alamat}}</td>
                                 <td>{{$sup->Kontak}}</td>
                                 <td>{{$sup->Handphone}}</td>
                                 <td>
-                                    <a href="/datasupplier/edit/{{ $sup->KodeSupplier }}" class="btn btn-warning">
+                                    <a href="{{ route('datasupplier.edit',$sup->KodeSupplier) }}" class="btn btn-warning">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>Edit
                                     </a>
-                                    <a href="/datasupplier/destroy/{{ $sup->KodeSupplier }}" class="btn btn-danger">
+                                    <a href="{{ route('datasupplier.destroy',$sup->KodeSupplier) }}" class="btn btn-danger">
                                         <i class="fa fa-trash" aria-hidden="true"></i>Hapus
                                     </a>
                                 </td>

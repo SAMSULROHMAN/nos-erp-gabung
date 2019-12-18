@@ -8,7 +8,7 @@
                         <h1>Tambah Data Karyawan</h1>
                     </div>
                     <div class="x_content">
-                        <form action="/datakaryawan/store" method="get">
+                        <form action="{{ route('datakaryawan.store')}}" method="post">
                         @csrf
                             <div class="form-group">
                                 <label>Kode Karyawan: </label>
@@ -55,7 +55,11 @@
                             </div>
                             <div class="form-group">
                                 <label>E-mail: </label>
-                                <input type="text" required="required" name="Email" placeholder="E-mail" class="form-control">
+                                <input type="text" name="Email" placeholder="E-mail" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Tahun Masuk</label>
+                                <input type="text" name="tahunmasuk" id="" class="form-control">
                             </div>
                             <button class="btn btn-success">Simpan</button>
                         </form>

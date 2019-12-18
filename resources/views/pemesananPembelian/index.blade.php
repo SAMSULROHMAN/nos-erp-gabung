@@ -49,43 +49,44 @@
 </div>
 </div>
 
-<script type="text/javascript">
-  var table = $('#pemesananpembelian').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: "{{ route('api.popembelianOPN') }}",
-    columns: [{
-        data: 'KodePO',
-        name: 'KodePO'
-      },
-      {
-        data: 'NamaLokasi',
-        name: 'NamaLokasi'
-      },
-      {
-        data: 'NamaMataUang',
-        name: 'NamaMataUang'
-      },
-      {
-        data: 'NamaSupplier',
-        name: 'NamaSupplier'
-      },
-      {
-        data: 'Tanggal',
-        name: 'Tanggal'
-      },
-      {
-        data: 'Expired',
-        name: 'Expired'
-      },
-      {
-        data: 'action',
-        name: 'action',
-        orderable: false,
-        searchable: false
-      }
-    ]
-  });
-</script>
-
+@endsection
+@section('scripts')
+    <script type="text/javascript">
+        var table = $('#pemesananpembelian').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('api.popembelianOPN') }}",
+            columns: [{
+                data: 'KodePO',
+                name: 'KodePO'
+            },
+                {
+                    data: 'NamaLokasi',
+                    name: 'NamaLokasi'
+                },
+                {
+                    data: 'NamaMataUang',
+                    name: 'NamaMataUang'
+                },
+                {
+                    data: 'NamaSupplier',
+                    name: 'NamaSupplier'
+                },
+                {
+                    data: 'Tanggal',
+                    name: 'Tanggal'
+                },
+                {
+                    data: 'Expired',
+                    name: 'Expired'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ]
+        });
+    </script>
 @endsection
