@@ -98,6 +98,7 @@ class DataPelangganController extends Controller
     public function edit($id)
     {
         $pelanggan = pelanggan::find($id);
+        // $pelanggan = DB::table('pelanggans')->get()->where('KodePelanggan',$id);
         return view('master.editForm.editDataPelanggan', compact('pelanggan'));
     }
 
@@ -129,6 +130,14 @@ class DataPelangganController extends Controller
         $pelanggan->save();
         */
         pelanggan::whereId($id)->update($pelanggan);
+        foreach ($alamats as $key => $value) {
+            DB::table('alamatpelanggans')->insert([
+                'KodePelanggan' => $request->KodePelanggan,
+                'Alamat' => $alamats[$key],
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+        }
         return redirect()->route('datapelanggan.index');
     }
 

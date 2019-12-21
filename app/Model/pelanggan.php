@@ -12,6 +12,6 @@ class pelanggan extends Model
 
     public function alamat()
     {
-        return $this->hasMany('App\Model\alamatpelanggan','KodePelanggan');
+        return $this->hasMany('App\Model\alamatpelanggan','id');
     }
 }

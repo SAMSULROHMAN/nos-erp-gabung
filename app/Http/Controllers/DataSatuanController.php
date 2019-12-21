@@ -49,6 +49,7 @@ class DataSatuanController extends Controller
         DB::table('satuans')->insert([
             'KodeSatuan' => $request->KodeSatuan,
             'NamaSatuan' => $request->NamaSatuan,
+            'Kemasan' => $request->Kemasan,
             'Status' => 'OPN',
             'KodeUser' => 'Admin',
             'created_at' => \Carbon\Carbon::now(),
@@ -105,6 +106,7 @@ class DataSatuanController extends Controller
 
         DB::table('satuans')->where('KodeSatuan',$request->KodeSatuan)->update([
             'NamaSatuan' => $request->NamaSatuan,
+            'Kemasan' => $request->Kemasan,
             'updated_at' => \Carbon\Carbon::now()
         ]);
         return redirect('/datasatuan');

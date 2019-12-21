@@ -20,6 +20,10 @@
                                 <label>Nama Satuan: </label>
                                 <input type="text" required="required" name="NamaSatuan" value="{{ $sat->NamaSatuan }}" placeholder="Nama Satuan" class="form-control">
                             </div>
+                            <div class="form-group">
+                                <label for="">Kemasan</label>
+                                <input type="text" name="Kemasan" id="" value="{{ $sat->Kemasan }}">
+                            </div>
                             <button class="btn btn-success">Simpan</button>
                         </form>
                         @endforeach

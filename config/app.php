@@ -176,14 +176,12 @@ return [
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Barryvdh\Snappy\ServiceProvider::class,
+        // Barryvdh\Snappy\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         SanderVanHooft\Invoicable\InvoicableServiceProvider::class,
-        Anouar\Fpdf\FpdfServiceProvider::class,
-        Elibyy\TCPDF\ServiceProvider::class
+        Barryvdh\DomPDF\ServiceProvider::class
     ],
 
     /*
@@ -234,15 +232,13 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'PDFSnappy' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        // 'PDFSnappy' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
-        'Fpdf' => Anouar\Fpdf\Facades\Fpdf::class,
-        'TCPDF' => Elibyy\TCPDF\Facades\TCPDF::class
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

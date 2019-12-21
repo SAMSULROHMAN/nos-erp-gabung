@@ -531,83 +531,78 @@
     <header>
         <div class="container">
             <div class="row">
-                <address class="col-sm-4" align="left">
-                    <strong>Kepada Yth.</strong><br>
-                    Tuan/Toko : <b>{{ $pelanggan->NamaPelanggan }}</b><br>
-                    Alamat    : <b>{{ $suratjalan->Alamat }}</b><br>
-                </address>
-                <address class="col-sm-4" align="center">
-                    <strong class="mr-3">Surat Jalan</strong>
-                    <p class="text-justify mr-3"onloadedmetadata=""><b>{{ $suratjalan->KodeSuratJalan }}</b></p>
-                    <p class="text-justify mr-3"><b>{{ Carbon\Carbon::parse($suratjalan->Tanggal)->format('d-M-Y')}}</b></p>
-                </address>
                 <address class="col-sm-4" align="right">
                         <p>Kami kirimkan barang-barang <br>
                         tersebut dibawah ini dengan</p>
                         <p>Driver :   <b>{{ $driver->Nama }}</b></p>
+                </address>
+                <address class="col-sm-4" align="center">
+                    <strong class="mr-3">Surat Jalan</strong>
+                    <p class="text-justify mr-3"onloadedmetadata=""><b>{{ $suratjalan->KodeSuratJalan }}</b></p>
+                    <p class="text-justify mr-3"><b>{{ Carbon\Carbon::parse($suratjalan->Tanggal)->format('d-m-Y')}}</b></p>
+                </address>
+                <address class="col-sm-4" align="left">
+                    <strong>Kepada Yth.</strong><br>
+                    Tuan/Toko : <b>{{ $pelanggan->NamaPelanggan }}</b><br>
+                    Alamat    : <b>{{ $suratjalan->Alamat }}</b><br>
                 </address>
             </div>
         </div>
     </header>
     <section>
         <div class="container">
-                <table width="80%" border="1px solid black" align="center">
-                        <thead>
+            <div class="row">
+                <table width="80%" class="table" align="center">
+                    <thead>
+                        <tr>
+                            <td class="text-center">Nama Barang</td>
+                            <td class="text-center">Jumlah Barang</td>
+                            <td class="text-center">Satuan</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($items as $data)
                             <tr>
-                                <td class="text-center">Nama Barang</td>
-                                <td class="text-center">Jumlah Barang</td>
-                                <td class="text-center">Satuan</td>
-                                <td class="text-center">Harga</td>
-                                <td class="text-center">Total</td>
+                                <td class="text-center">
+                                    {{$data->NamaItem}}
+                                </td>
+                                <td class="text-center">
+                                    {{$data->jml}}
+                                </td class="text-center">
+                                <td class="text-center">
+                                    {{$data->NamaSatuan}}
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($items as $data)
-                                <tr class="rowinput">
-                                    <td>
-                                        {{$data->NamaItem}}
-                                    </td>
-                                    <td>
-                                        {{$data->jml}}
-                                    </td>
-                                    <td>
-                                        {{$data->NamaSatuan}}
-                                    </td>
-                                    <td>
-                                        {{$data->HargaJual}}
-                                    </td>
-                                    <td>
-                                        {{$data->HargaJual * $data->jml}}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="text-center">Nama Barang</td>
+                            <td class="text-center">Jumlah Barang</td>
+                            <td class="text-center">Satuan</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </section>
     <footer id="footer">
         <div class="container">
                 <div class="row">
-                    <address class="col-sm-4" align="left">
-                        <label class="text-center">Pemeriksa</label><br><br><br>
-                        <p>(......................................)</p>
-                    </address>
                     <div class="col-sm-4">
-                      <strong class="text-center">       Penerima       </strong><br>
-                      <br>
-                      <br>
-                      <p>(......................................)</p>
+                        <p class="text-center">Pemeriksa</p>
+                        <p class="text-center">(......................................)</p>
                     </div>
-                    <address class="col-sm-4" align="right">
-                        <label class="center">Hormat Kami</label><br>
-                        <br>
-                        <br>
-                        <p>(......................................)</p>
-                    </address>
+                    <div class="col-sm-4">
+                        <p class="text-center">Penerima</p>
+                        <p class="text-center">(......................................)</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <p class="text-center">Hormat Kami</p>
+                        <p class="text-center">(......................................)</p>
+                    </div>
                 </div>
             </div>
     </footer>
-    <h1>Dancok</h1>
-
 </body>
 </html>

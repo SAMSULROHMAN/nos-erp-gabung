@@ -18,6 +18,10 @@
                                 <label>Nama Satuan: </label>
                                 <input type="text" required="required" name="NamaSatuan" placeholder="Nama Satuan" class="form-control">
                             </div>
+                            <div class="form-group">
+                                <label for="">Kemasan</label>
+                                <input type="text" name="Kemasan" id="">
+                            </div>
                             <button class="btn btn-success">Simpan</button>
                         </form>
                     </div>

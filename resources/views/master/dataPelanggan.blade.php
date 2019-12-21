@@ -45,9 +45,9 @@
                                 <td>{{ $p->Email}}</td>
                                 <td>{{ $p->NIK }}</td>
                                 <td>
-                                    <a href="/datapelanggan/edit/{{ $p->KodePelanggan }}" class="btn btn-warning">
+                                    {{-- <a href="{{ route('datapelanggan.edit',$p->KodePelanggan)}}" class="btn btn-warning">
                                         <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                                    </a>
+                                    </a> --}}
                                     <a href="/datapelanggan/destroy/{{ $p->KodePelanggan }}" class="btn btn-danger">
                                         <i class="fa fa-trash" aria-hidden="true"></i> Hapus
                                     </a>

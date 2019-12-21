@@ -21,10 +21,10 @@
                                 <label>Nama Supplier: </label>
                                 <input type="text" value="{{ $sup->NamaSupplier }}" required="required" type="text" name="NamaSupplier" placeholder="Nama Supplier" class="form-control">
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label>Alamat: </label>
                                 <input type="text" value="{{ $sup->Alamat }}" required="required" name="Alamat" placeholder="Alamat" class="form-control">
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label>Kontak: </label>
                                 <input type="text" value="{{ $sup->Kontak }}" required="required" name="Kontak" placeholder="Kontak" class="form-control">
