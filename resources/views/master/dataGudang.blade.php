@@ -35,7 +35,6 @@
                   </tr>
                 </thead>
                 <tbody>
-                    {{-- @if (isset($lokasi))
                       @foreach($lokasi as $lok)
                         <tr>
                         <td>{{$lok->KodeLokasi}}</td>
@@ -53,13 +52,6 @@
                         </td>
                       </tr>
                       @endforeach
-                    @else
-                      <tr>
-                          <td>
-                            <p>Tidak Ada Data</p>
-                          </td>
-                      </tr>
-                    @endif --}}
                 </tbody>
               </table>
               {{-- <div class="pull-left">

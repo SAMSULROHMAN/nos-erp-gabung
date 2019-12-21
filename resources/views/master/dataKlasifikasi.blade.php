@@ -40,10 +40,10 @@
                                 <td>{{$kat->NamaKategori}}</td>
                                 <td>{{$kat->KodeItemAwal}}</td>
                                 <td>
-                                    <a href="/dataklasifikasi/edit/{{ $kat->KodeKategori }}" class="btn btn-warning">
+                                    <a href="{{ route('dataklasifikasi.edit',$kat->KodeKategori)}}" class="btn btn-warning">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>Edit
                                     </a>
-                                    <a href="/dataklasifikasi/destroy/{{ $kat->KodeKategori }}" class="btn btn-danger">
+                                    <a href="{{ route('dataklasifikasi.destroy',$kat->KodeKategori)}}" class="btn btn-danger">
                                         <i class="fa fa-trash" aria-hidden="true"></i>Hapus
                                     </a>
                                 </td>

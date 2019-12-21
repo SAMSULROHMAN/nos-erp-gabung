@@ -29,6 +29,7 @@
                             <tr>
                                 <th>Kode Satuan</th>
                                 <th>Nama Satuan</th>
+                                <th>Kemasan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -37,11 +38,12 @@
                             <tr>
                                 <td>{{$sat->KodeSatuan}}</td>
                                 <td>{{$sat->NamaSatuan}}</td>
+                                <td>{{ $sat->Kemasanan }}</td>
                                 <td>
-                                    <a href="/datasatuan/edit/{{ $sat->KodeSatuan }}" class="btn btn-warning">
+                                    <a href="{{ route('datasatuan.edit', $sat->KodeSatuan)}}" class="btn btn-warning">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>Edit
                                     </a>
-                                    <a href="/datasatuan/destroy/{{ $sat->KodeSatuan }}" class="btn btn-danger">
+                                    <a href="{{ route('datasatuan.destroy',$sat->KodeSatuan)}}" class="btn btn-danger">
                                         <i class="fa fa-trash" aria-hidden="true"></i>Hapus
                                     </a>
                                 </td>
