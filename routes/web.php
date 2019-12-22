@@ -20,15 +20,6 @@ Route::group(['middleware' => 'auth'], function() {
   Route::resource('/datasatuan', 'DataSatuanController');
   Route::resource('/datasupplier', 'DataSupplierController');
   Route::resource('/datakaryawan','KaryawanController');
-  Route::resource('datapelanggan', 'DataPelangganController');
-  Route::resource('/datagudang', 'DataGudangController');
-  Route::resource('/dataitem', 'DataItemController');
-  Route::resource('/dataklasifikasi', 'DataKlasifikasiController');
-  Route::resource('/datamatauang', 'DataMataUangController');
-  Route::resource('/datapelanggan', 'DataPelangganController');
-  Route::resource('/datasatuan', 'DataSatuanController');
-  Route::resource('/datasupplier', 'DataSupplierController');
-  Route::resource('/datakaryawan','KaryawanController');
 
 
   //Pembelian route
