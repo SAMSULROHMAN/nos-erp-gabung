@@ -1,0 +1,2 @@
+tambah field kodekemasan type string di table data satuan
+tambah field jumlahkemasan type int di table data satuan

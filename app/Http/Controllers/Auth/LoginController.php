@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-//use App\lokasi;
+use App\lokasi;
 
 class LoginController extends Controller
 {
@@ -37,7 +37,18 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
+    
+    public function username()
+    {
+        return 'name';
+    }
+    
+    //override
+    public function showLoginForm(){
+        $lokasi = lokasi::where('Status','OPN')->get();
+        return view('auth.login',compact('lokasi'));
+    }
+    
     // public function index(){
     //     $lokasi = lokasi::where('Status','OPN')->get();
     //     return view('auth.login',compact('lokasi'));
