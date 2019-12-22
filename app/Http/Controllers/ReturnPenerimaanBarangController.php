@@ -10,9 +10,9 @@ use Carbon\Carbon;
 // use App\Model\penerimaanbarangreturn;
 use App\penerimaanbarangreturn;
 use App\Model\penerimaanbarang;
-use App\lokasi;
-use App\supplier;
-use App\invoicehutangdetail;
+use App\Model\lokasi;
+use App\Model\supplier;
+use App\Model\invoicehutangdetail;
 use SebastianBergmann\Environment\Console;
 
 class ReturnPenerimaanBarangController extends Controller
@@ -268,9 +268,9 @@ class ReturnPenerimaanBarangController extends Controller
     }
 
     public function print($id)
-    {   
-        $data = 
-        DB::select("select lpb.*,a.*,b.Keterangan from penerimaanbarangreturns a 
+    {
+        $data =
+        DB::select("select lpb.*,a.*,b.Keterangan from penerimaanbarangreturns a
             left join penerimaanbarangs lpb on lpb.KodePenerimaanBarang = a.KodePenerimaanBarang
             left join pemesananpembelians b on lpb.KodePO = b.KodePO  where a.KodePenerimaanBarangReturn = '".$id."'")[0];
         $items = DB::select("SELECT a.KodeItem,i.NamaItem, SUM(a.Qty) as jml, i.Keterangan, s.NamaSatuan, k.HargaBeli FROM penerimaanbarangreturndetails a inner join items i on a.KodeItem = i.KodeItem inner join itemkonversis k on i.KodeItem = k.KodeItem inner join satuans s on s.KodeSatuan = k.KodeSatuan where a.KodePenerimaanBarangReturn='".$data->KodePenerimaanBarangReturn."' group by a.KodeItem, i.Keterangan, s.NamaSatuan, k.HargaBeli, i.NamaItem ");
@@ -281,9 +281,9 @@ class ReturnPenerimaanBarangController extends Controller
             $jml += $value->jml;
         }
         $data->Tanggal = Carbon::parse($data->Tanggal)->format('d/m/Y');
-        
+
         $pdf = PDF::loadview('returnPenerimaanBarang.print',compact('data', 'id', 'items', 'jml', 'supplier', 'lokasi'));
-        
+
         return $pdf->download('returnPenerimaanBarang.pdf');
     }
 

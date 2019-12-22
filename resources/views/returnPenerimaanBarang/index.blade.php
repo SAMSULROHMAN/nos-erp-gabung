@@ -42,8 +42,10 @@
     <!-- Button trigger modal -->
 </div>
 </div>
+@endsection
 
-<script type="text/javascript">
+@section('scripts')
+    <script type="text/javascript">
     var table = $('#penerimaanbarangreturn').DataTable({
         processing: true,
         serverSide: true,

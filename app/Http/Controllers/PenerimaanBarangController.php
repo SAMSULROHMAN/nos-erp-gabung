@@ -8,8 +8,8 @@ use DB;
 use PDF;
 use App\Model\penerimaanbarang;
 use App\Model\pemesananpembelian;
-use App\lokasi;
-use App\supplier;
+use App\Model\lokasi;
+use App\Model\supplier;
 use App\Model\invoicehutang;
 use Carbon\Carbon;
 
@@ -90,6 +90,7 @@ class PenerimaanBarangController extends Controller
      */
     public function store(Request $request, $id)
     {
+        // dd($request->all());
         $last_id = DB::select('SELECT * FROM penerimaanbarangs ORDER BY id DESC LIMIT 1');
 
         $year_now = date('y');
@@ -142,9 +143,12 @@ class PenerimaanBarangController extends Controller
         foreach ($items as $key => $value) {
             DB::table('penerimaanbarangdetails')->insert([
                 'KodePenerimaanBarang' => $newID,
+                'KodeSatuan' => $request->satuan,
                 'KodeItem' => $items[$key],
+                'Harga' => $qtys[$key],
                 'Qty' => $qtys[$key],
                 'NoUrut' => 0,
+                'Keterangan' => $request->keterangan,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
             ]);
@@ -357,9 +361,9 @@ class PenerimaanBarangController extends Controller
     }
 
     public function print($id)
-    {   
-        $data = 
-        DB::select("select a.*,b.Keterangan from penerimaanbarangs a 
+    {
+        $data =
+        DB::select("select a.*,b.Keterangan from penerimaanbarangs a
             left join pemesananpembelians b on a.KodePO = b.KodePO  where a.KodePenerimaanBarang = '".$id."'")[0];
         $items = DB::select("SELECT a.KodeItem,i.NamaItem, SUM(a.Qty) as jml, i.Keterangan, s.NamaSatuan, k.HargaBeli FROM penerimaanbarangdetails a inner join items i on a.KodeItem = i.KodeItem inner join itemkonversis k on i.KodeItem = k.KodeItem inner join satuans s on s.KodeSatuan = k.KodeSatuan where a.KodePenerimaanBarang='".$data->KodePenerimaanBarang."' group by a.KodeItem, i.Keterangan, s.NamaSatuan, k.HargaBeli, i.NamaItem ");
         $lokasi = lokasi::where('KodeLokasi', $data->KodeLokasi)->get();
@@ -371,7 +375,7 @@ class PenerimaanBarangController extends Controller
         $data->Tanggal = Carbon::parse($data->Tanggal)->format('d/m/Y');
 
         $pdf = PDF::loadview('penerimaanBarang.print',compact('data', 'id', 'items', 'jml', 'supplier', 'lokasi'));
-        
+
         return $pdf->download('penerimaanBarang.pdf');
     }
 

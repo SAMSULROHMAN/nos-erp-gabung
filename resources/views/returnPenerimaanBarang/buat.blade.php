@@ -128,13 +128,13 @@
                                             <input type="hidden" class="max{{$key+1}}" value="{{$data->jml}}">
                                         </td>
                                         <td>
-                                            {{$data->NamaSatuan}}
+                                            <input type="text" name="satuan" id="" value="{{$data->NamaSatuan}}">
                                         </td>
                                         <td>
                                             <input readonly="" type="text" name="price[]" class="form-control price{{$key+1}}" required="" value="{{$data->HargaBeli}}">
                                         </td>
                                         <td>
-                                            {{$data->Keterangan}}
+                                            <input type="text" name="keterangan" id="" value="{{$data->Keterangan}}">
                                         </td>
                                         <td>
                                             <input readonly="" type="text" name="total[]" class="form-control total{{$key+1}}" required="" value="{{$data->HargaBeli * $data->jml}}">

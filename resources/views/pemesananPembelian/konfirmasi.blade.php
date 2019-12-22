@@ -31,8 +31,9 @@
 </div>
 </div>
 </div>
-
-<script type="text/javascript">
+@endsection
+@section('scripts')
+    <script type="text/javascript">
   var table = $('#pemesananpembelian').DataTable({
     processing: true,
     serverSide: true,
@@ -70,5 +71,4 @@
     ]
   });
 </script>
-
 @endsection

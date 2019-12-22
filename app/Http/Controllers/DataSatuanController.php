@@ -15,8 +15,8 @@ class DataSatuanController extends Controller
      */
     public function index()
     {
-        //$satuan = DB::table('satuans')->get();
-        $satuan = satuan::where('Status','OPN')->paginate(5);
+        $satuan = DB::table('satuans')->where('Status','OPN')->get();
+        // $satuan = satuan::where('Status','OPN')->paginate(5);
         return view('master.dataSatuan', ['satuan' => $satuan]);
 
         // $satuan = satuan::all();

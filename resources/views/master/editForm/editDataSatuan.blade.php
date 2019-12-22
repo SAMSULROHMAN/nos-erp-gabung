@@ -9,7 +9,7 @@
                     </div>
                     <div class="x_content">
                         @foreach($satuan as $sat)
-                        <form action="{{ route('/datasatuan/update',$sat->KodeSatuan)}}" method="post">
+                        <form action="{{ route('datasatuan.update',$sat->KodeSatuan)}}" method="post">
                           @method('PUT')
                         @csrf
                             <div class="form-group">

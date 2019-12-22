@@ -10,17 +10,10 @@ use DataTables;
 
 class DataGudangController extends Controller
 {
-    public function __construct(){
-      $this->middleware('permission:gudang-list|gudang-create|gudang-edit|gudang-delete', ['only' => ['index','show']]);
-      $this->middleware('permission:gudang-create', ['only' => ['create','store']]);
-      $this->middleware('permission:gudang-edit', ['only' => ['edit','update']]);
-      $this->middleware('permission:gudang-delete', ['only' => ['destroy']]);
-    }
-
     public function index(Request $request)
     {
         // untuk menampilkan data gudang
-        // $lokasi = lokasi::where('Status','OPN')->paginate(5);
+        $lokasi = lokasi::where('Status','OPN')->paginate(5);
         // logika untuk pencarian data
         // butuh logika enkapsulasi dan abstraksi
 
@@ -36,7 +29,7 @@ class DataGudangController extends Controller
         //   ->orWhere('Tipe','LIKE',"%$search%")
         //   ->paginate(5);
         // }
-        return view('master.dataGudang');
+        return view('master.dataGudang',compact('lokasi'));
     }
 
     public function getDataGudang()

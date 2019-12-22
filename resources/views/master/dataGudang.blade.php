@@ -54,9 +54,9 @@
                       @endforeach
                 </tbody>
               </table>
-              {{-- <div class="pull-left">
+              <div class="pull-left">
                 {{ $lokasi->links() }}
-              </div> --}}
+              </div>
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@
   </div>
 @endsection
 @section('scripts')
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $(document).ready(function(){
       $('#gudang_table').DataTable({
             processing: true,
@@ -78,5 +78,5 @@
             ]
       });
     });
-</script>
+</script> --}}
 @endsection

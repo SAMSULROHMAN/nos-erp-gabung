@@ -39,7 +39,9 @@
 </div>
 </div>
 
-<script type="text/javascript">
+@endsection
+@section('scripts')
+    <script type="text/javascript">
   var table = $('#penerimaanbarang').DataTable({
     processing: true,
     serverSide: true,

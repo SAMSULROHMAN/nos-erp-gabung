@@ -38,7 +38,7 @@
                             <tr>
                                 <td>{{$sat->KodeSatuan}}</td>
                                 <td>{{$sat->NamaSatuan}}</td>
-                                <td>{{ $sat->Kemasanan }}</td>
+                                <td>{{ $sat->Kemasan }}</td>
                                 <td>
                                     <a href="{{ route('datasatuan.edit', $sat->KodeSatuan)}}" class="btn btn-warning">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>Edit

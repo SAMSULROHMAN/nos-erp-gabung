@@ -51,12 +51,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div class="row">
-                        <div class="col-md-8"></div>
-                        <div class="col-md-4">
-                            {{ $kategori->links() }}
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

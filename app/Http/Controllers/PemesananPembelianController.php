@@ -45,8 +45,8 @@ class PemesananPembelianController extends Controller
         $matauang = DB::table('matauangs')->get();
         $lokasi = DB::table('lokasis')->get();
         $supplier = DB::table('suppliers')->get();
-        $item = DB::select("SELECT s.KodeItem, s.NamaItem, k.HargaBeli, t.NamaSatuan, s.Keterangan FROM items s 
-            inner join itemkonversis k on k.KodeItem = s.KodeItem 
+        $item = DB::select("SELECT s.KodeItem, s.NamaItem, k.HargaBeli, t.NamaSatuan, s.Keterangan FROM items s
+            inner join itemkonversis k on k.KodeItem = s.KodeItem
             inner join satuans t on k.KodeSatuan = t.KodeSatuan where s.jenisitem='bahanbaku' ");
         $last_id = DB::select('SELECT * FROM pemesananpembelians ORDER BY KodePO DESC LIMIT 1');
         $last_id_tax = DB::select('SELECT * FROM pemesananpembelians WHERE KodePO LIKE "%POT-%"  ORDER BY KodePO DESC LIMIT 1');
@@ -186,32 +186,32 @@ class PemesananPembelianController extends Controller
      */
     public function show($id)
     {
-        $data = DB::select("SELECT a.KodePO, a.Tanggal, a.Expired, b.NamaMataUang, c.NamaLokasi, d.NamaSupplier, a.Keterangan, a.Diskon, a.PPN, a.Subtotal from pemesananpembelians a 
+        $data = DB::select("SELECT a.KodePO, a.Tanggal, a.Expired, b.NamaMataUang, c.NamaLokasi, d.NamaSupplier, a.Keterangan, a.Diskon, a.PPN, a.Subtotal from pemesananpembelians a
             inner join matauangs b on b.KodeMataUang = a.KodeMataUang
             inner join lokasis c on c.KodeLokasi = a.KodeLokasi
             inner join suppliers d on d.KodeSupplier = a.KodeSupplier
             where a.KodePO ='" . $id . "' limit 1")[0];
-        $items = DB::select("SELECT a.Qty, b.NamaItem, d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesananpembeliandetails a 
+        $items = DB::select("SELECT a.Qty, b.NamaItem, d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesananpembeliandetails a
             inner join items b on a.KodeItem = b.KodeItem
-            inner join itemkonversis c on c.KodeItem = a.KodeItem 
+            inner join itemkonversis c on c.KodeItem = a.KodeItem
             inner join satuans d on c.KodeSatuan = d.KodeSatuan
             where a.KodePO ='" . $id . "' ");
         $OPN = true;
-         dd($items);
+        // dd($items);
 
         return view('pemesananpembelian.lihat', compact('data', 'id', 'items', 'OPN'));
     }
 
     public function lihat($id)
     {
-        $data = DB::select("SELECT a.KodePO, a.Tanggal, a.Expired, b.NamaMataUang, c.NamaLokasi, d.NamaSupplier, a.Keterangan, a.Diskon, a.PPN, a.Subtotal from pemesananpembelians a 
+        $data = DB::select("SELECT a.KodePO, a.Tanggal, a.Expired, b.NamaMataUang, c.NamaLokasi, d.NamaSupplier, a.Keterangan, a.Diskon, a.PPN, a.Subtotal from pemesananpembelians a
             inner join matauangs b on b.KodeMataUang = a.KodeMataUang
             inner join lokasis c on c.KodeLokasi = a.KodeLokasi
             inner join suppliers d on d.KodeSupplier = a.KodeSupplier
             where a.KodePO ='" . $id . "' limit 1")[0];
-        $items = DB::select("SELECT a.Qty, b.NamaItem, d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesananpembeliandetails a 
+        $items = DB::select("SELECT a.Qty, b.NamaItem, d.NamaSatuan, a.Harga, a.Subtotal, b.Keterangan  from pemesananpembeliandetails a
             inner join items b on a.KodeItem = b.KodeItem
-            inner join itemkonversis c on c.KodeItem = a.KodeItem 
+            inner join itemkonversis c on c.KodeItem = a.KodeItem
             inner join satuans d on c.KodeSatuan = d.KodeSatuan
             where a.KodePO ='" . $id . "' ");
         $OPN = false;
