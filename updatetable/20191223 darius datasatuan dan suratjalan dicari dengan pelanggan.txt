@@ -1,0 +1,4 @@
+tambah field di table : satuans
+field :
+1. nama field= NamaKemasan, type=string varchar(255)
+2. nama field= JumlahSatuan, type=int(11)
