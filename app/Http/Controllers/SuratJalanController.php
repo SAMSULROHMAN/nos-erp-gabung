@@ -13,6 +13,7 @@ use App\Model\pelanggan;
 use Carbon\Carbon;
 use PDF;
 use App\Model\invoicepiutang;
+use function Complex\add;
 
 
 class SuratJalanController extends Controller
@@ -57,13 +58,16 @@ class SuratJalanController extends Controller
         $suratjalans->all();
         return view('suratJalan.suratJalan',compact('suratjalans','start','end'));
     }
-
+    public function createByCust(){
+      $customers = DB::table('pelanggans')->get();
+      return view('suratJalan.buatSuratJalan',compact('customers'));
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function createBasedSO($id)
     {
         $drivers = karyawan::where('jabatan','driver')->get();
         $pemesananpenjualan =DB::select("select DISTINCT a.KodeSO from (
@@ -87,7 +91,7 @@ class SuratJalanController extends Controller
             having jml >0");
         $so =pemesananpenjualan::where('KodeSO',$id)->first();
         $matauang = DB::table('matauangs')->get();
-        return view('suratJalan.buatSuratJalan', compact('pemesananpenjualan', 'id', 'pelanggans', 'lokasis','drivers','items','so','matauang'));
+        return view('suratJalan.buatSuratJalanAjaxView', compact('pemesananpenjualan', 'id', 'pelanggans', 'lokasis','drivers','items','so','matauang'));
     }
 
     /**
@@ -182,6 +186,22 @@ class SuratJalanController extends Controller
         $pelanggan = pelanggan::where('KodePelanggan',$suratjalan->KodePelanggan)->first();
         $items = DB::select("sELECT a.KodeItem,i.NamaItem, SUM(a.Qty) as jml, i.Keterangan, s.NamaSatuan, k.HargaJual FROM suratjalandetails a inner join items i on a.KodeItem = i.KodeItem inner join itemkonversis k on i.KodeItem = k.KodeItem inner join satuans s on s.KodeSatuan = k.KodeSatuan where a.KodeSuratJalan='".$suratjalan->KodeSuratJalan."' group by a.KodeItem, i.Keterangan, s.NamaSatuan, k.HargaJual, i.NamaItem ");
         return view('suratJalan.showSuratJalan', compact('id','suratjalan','driver','matauang','lokasi','pelanggan','items'));
+    }
+
+    public  function searchSOByCustId($id){
+      $so = DB::table('pemesananpenjualans')->get()->where('KodePelanggan',$id);
+//      foreach ($so as $soItem){
+//        return
+//      }
+      if($so != null){
+        $kodeSo = array();
+        foreach ($so as $soItem){
+          array_push($kodeSo, $soItem->KodeSO);
+        }
+        return response()->json($kodeSo);
+      }else{
+        return response()->json([]);
+      }
     }
 
     /**
