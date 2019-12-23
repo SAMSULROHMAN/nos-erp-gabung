@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Model\suratjalan;
-use App\Model\karyawan;
+use App\Model\Karyawan;
 use App\Model\pemesananpenjualan;
 use App\Model\matauang;
 use App\Model\lokasi;
