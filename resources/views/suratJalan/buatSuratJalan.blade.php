@@ -62,8 +62,9 @@
       $('#custId').on('change', function () {
           var nameId = $('#custId option:selected').attr('value');
           if (nameId == 0) {
-              $('.so-select-container').html('')
+              $('.so-select-container').html('');
           } else {
+              $('.so-select-container').html('');
               var my_url = '/suratJalan/searchsobycustid/' + nameId;
               $.get(my_url, function (datas, status) {
                   var html = '';
@@ -85,6 +86,7 @@
                   $('.so-select-container').html(html)
               });
           }
+          $('.so-detail-container').html('');
       });
       $('body').on('change', '#soId', function () {
           var soId = $('#soId option:selected').attr('value');
