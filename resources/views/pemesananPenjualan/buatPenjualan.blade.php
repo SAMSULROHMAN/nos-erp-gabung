@@ -118,7 +118,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <a href="#" class="btn btn-success" onclick="addrow()">
+                                <a href="javascript:;" class="btn btn-success" onclick="addrow()">
                                     <i class="fa fa-plus" aria-hidden="true"></i>Tambah Item
                                 </a>
                                 <br><br><br>
@@ -127,20 +127,24 @@
                                     <input type="hidden" id="{{$itemData->KodeItem}}" value="{{ $itemData->HargaJual }}">
                                     <input type="hidden" id="{{$itemData->KodeItem}}Ket" value="{{$itemData->Keterangan}}">
                                     <input type="hidden" id="{{$itemData->KodeItem}}Sat" value="{{$itemData->NamaSatuan}}">
+                                    <input type="hidden" id="{{$itemData->KodeItem}}Kem" value="{{$itemData->NamaKemasan}}">
+                                    <input type="hidden" id="{{$itemData->KodeItem}}Jum" value="{{$itemData->JumlahSatuan}}">
                                 @endforeach
                                 <table id="items" class="table">
                                     <tr>
-                                        <td>Nama Barang</td>
-                                        <td>Qty</td>
+                                        <td style="width:18%;">Nama Barang</td>
+                                        <td style="width:8%;">Qty</td>
                                         <td>Satuan</td>
-                                        <td>Harga</td>
+                                        <td style="width:12%;">Harga Satuan</td>
+                                        <td style="width:18%;">Kemasan</td>
+                                        {{--                      <td>Harga Per Kemasan</td>--}}
                                         <td>Keterangan</td>
                                         <td>Total</td>
                                         <td></td>
                                     </tr>
                                     <tr class="rowinput">
                                         <td>
-                                            <select name="item[]" onchange="barang(this,1);" class="form-control item1" id="item">
+                                            <select name="item[]" onchange="barang(this,1);" class="form-control item1" id="item1">
                                                 @foreach($item as $itemData)
                                                     <option value="{{$itemData->KodeItem}}">{{$itemData->NamaItem}}</option>
                                                 @endforeach
@@ -153,7 +157,11 @@
                                             <input type="text" class="form-control satuan1" required="" value="0">
                                         </td>
                                         <td>
-                                            <input readonly="" type="text" name="price[]" class="form-control price1" required="" value="0">
+                                            <input type="text" name="price[]" class="form-control price1" required="" value="0">
+                                        </td>
+                                        <td>
+                                            <input readonly="" type="text" class="form-control kemasan1" required=""
+                                                   value="0">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control keterangan1" required="" value="0">
@@ -187,133 +195,155 @@
 </div>
 @endsection
 @section('scripts')
-<script type="text/javascript">
-    $('#inputDate').datetimepicker({
-      defaultDate: new Date(),
-      format: 'DD-MM-YYYY'
-    });
+    <script type="text/javascript">
+        $('#inputDate').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD-MM-YYYY'
+        });
 
-    $('#inputDate2').datetimepicker({
-      defaultDate: new Date(),
-      format: 'DD-MM-YYYY'
-    });
-    $('#item').select2();
-    var item =$(".item"+1).val();
-    var sat =$("#"+item+"Sat").val();
-    $(".satuan"+1).val(sat);
-    var ket =$("#"+item+"Ket").val();
-    $(".keterangan"+1).val(ket);
+        $('#inputDate2').datetimepicker({
+            defaultDate: new Date(),
+            format: 'DD-MM-YYYY'
+        });
+        $('#item').select2();
+        var item = $(".item" + 1).val();
+        var sat = $("#" + item + "Sat").val();
+        $(".satuan" + 1).val(sat);
 
-    function qty(int){
-        var qty =$(".qty"+int).val();
-        var item =$(".item"+int).val();
-        var price =$("#"+item).val();
-        $(".price"+int).val(price);
-        $(".total"+int).val(price*qty);
-        var count =$("#totalItem").val();
-        updatePrice(count);
-    }
-
-    function addrow(){
-        $("#totalItem").val(parseInt($("#totalItem").val())+1);
-        var count =$("#totalItem").val();
-        var markup = $(".rowinput").html();
-        var res = "<tr class='tambah"+count+"'>"+markup+"</tr>";
-        res = res.replace("qty1", "qty"+count);
-        res = res.replace("item1", "item"+count);
-        res = res.replace("price1", "price"+count);
-        res = res.replace("total1", "total"+count);
-        res = res.replace("qty(1)", "qty("+count+")");
-        res = res.replace("barang(this,1", "barang(this,"+count);
-        res = res.replace("satuan1", "satuan"+count);
-        res = res.replace("keterangan1", "keterangan"+count);
-        res = res.replace("<td></td>", '<td><i onclick="del('+count+')" class="fa fa-trash"></i></td>');
-
-        $("#items tbody").append(res);
-        var item =$(".item"+count).val();
-        var sat =$("#"+item+"Sat").val();
-        $(".satuan"+count).val(sat);
-        var ket =$("#"+item+"Ket").val();
-        $(".keterangan"+count).val(ket);
-    }
-
-    function barang(val,int){
-        var sat =$("#"+val.value+"Sat").val();
-        $(".satuan"+int).val(sat);
-        var ket =$("#"+val.value+"Ket").val();
-        $(".keterangan"+int).val(ket);
-        $(".price"+int).val(0);
-        $(".total"+int).val(0);
-        $(".qty"+int).val(0);
-    }
-
-    function del(int){
-        $(".tambah"+int).remove();
-        var count =$("#totalItem").val();
-        updatePrice(count);
-    }
-
-    function disc(){
-        var count =$("#totalItem").val();
-        updatePrice(count);
-    }
-
-    function ppnfunc(val){
-
-        if(val.value=='ya'){
-            $(".a").hide();
-            $(".b").show();
-            $(".idp").val($(".b").text());
+        if($("#" + item + "Jum").val() == 0){
+            var kem = "Tidak ada kemasan mosok"
         }else{
-            $(".a").show();
-            $(".b").hide();
-            $(".idp").val($(".a").text());
+            var kem = $("#" + item + "Kem").val() +  ", Isinya: "+ $("#" + item + "Jum").val();
+        }
+        $(".kemasan" + 1).val(kem);
+
+
+        var ket = $("#" + item + "Ket").val();
+        $(".keterangan" + 1).val(ket);
+
+        function qty(int) {
+            var qty = $(".qty" + int).val();
+            var item = $(".item" + int).val();
+            var price = $("#" + item).val();
+            $(".price" + int).val(price);
+            $(".total" + int).val(price * qty);
+            var count = $("#totalItem").val();
+            updatePrice(count);
         }
 
-        var count =$("#totalItem").val();
-        updatePrice(count);
-    }
-
-    function updatePrice(tot){
-
-        $(".subtotal").val(0);
-        var diskon=0;
-        if($(".diskon").val()!=""){
-            diskon = parseInt($(".diskon").val());
-        }
-        for(var i=1; i<=tot;i++){
-            if($(".total"+i).val()!=undefined){
-                $(".subtotal").val(parseInt($(".subtotal").val())+parseInt($(".total"+i).val()));
-            }
-        }
-        var befDis = $(".subtotal").val();
-        diskon = parseInt($(".subtotal").val())*diskon/100;
-        $(".subtotal").val(parseInt($(".subtotal").val())-diskon);
-        var ppn =$(".ppn").val();
-        if(ppn=="ya"){
-            ppn = parseInt(befDis)*10/100;
-        }else{
-            ppn = parseInt(0);
-        }
-        $(".ppnval").val(ppn);
-        $(".diskonval").val(diskon);
-        $(".befDis").val(parseInt($(".subtotal").val()));
-        $(".subtotal").val(parseInt($(".subtotal").val())+ppn);
-    }
-
-    $('.formsub').submit(function(event){
-        tot = $("#totalItem").val();
-        for (var i = 1; i <= tot; i++) {
-            if (typeof $(".qty"+i).val()=== 'undefined'){
+        function addrow() {
+            $("#totalItem").val(parseInt($("#totalItem").val()) + 1);
+            var count = $("#totalItem").val();
+            var markup = $(".rowinput").html();
+            var res = "<tr class='tambah" + count + "'>" + markup + "</tr>";
+            res = res.replace("qty1", "qty" + count);
+            res = res.replace("item1", "item" + count);
+            res = res.replace("kemasan1", "kemasan" + count);
+            res = res.replace("price1", "price" + count);
+            res = res.replace("total1", "total" + count);
+            res = res.replace("qty(1)", "qty(" + count + ")");
+            res = res.replace("barang(this,1", "barang(this," + count);
+            res = res.replace("satuan1", "satuan" + count);
+            res = res.replace("keterangan1", "keterangan" + count);
+            res = res.replace("<td></td>", '<td><i onclick="del(' + count + ')" class="fa fa-trash"></i></td>');
+            $('#item'+count).select2();
+            $("#items tbody").append(res);
+            var item = $(".item" + count).val();
+            var sat = $("#" + item + "Sat").val();
+            $(".satuan" + count).val(sat);
+            if($("#" + item + "Jum").val() == 0){
+                var kem = "Tidak ada kemasan"
             }else{
-                if ($(".qty"+i).val() == 0){
-                    event.preventDefault();
-                    $(".qty"+i).focus();
+                var kem = $("#" + item + "Kem").val() +  ", Isinya: "+ $("#" + val.value + "Jum").val();
+            }
+            $(".kemasan" + count).val(kem);
+            var ket = $("#" + item + "Ket").val();
+            $(".keterangan" + count).val(ket);
+        }
+
+        function barang(val, int) {
+            var sat = $("#" + val.value + "Sat").val();
+            $(".satuan" + int).val(sat);
+            if($("#" + val.value + "Jum").val() == 0){
+                var kemasan = "Tidak ada satuan kemasan"
+            }else{
+                var kemasan = $("#" + val.value + "Kem").val() +  ", Isinya: "+ $("#" + val.value + "Jum").val();
+            }
+            $(".kemasan" + int).val(kemasan);
+            var ket = $("#" + val.value + "Ket").val();
+            $(".keterangan" + int).val(ket);
+            $(".price" + int).val(0);
+            $(".total" + int).val(0);
+            $(".qty" + int).val(0);
+        }
+
+        function del(int) {
+            $(".tambah" + int).remove();
+            var count = $("#totalItem").val();
+            updatePrice(count);
+        }
+
+        function disc() {
+            var count = $("#totalItem").val();
+            updatePrice(count);
+        }
+
+        function ppnfunc(val) {
+
+            if (val.value == 'ya') {
+                $(".a").hide();
+                $(".b").show();
+                $(".idp").val($(".b").text());
+            } else {
+                $(".a").show();
+                $(".b").hide();
+                $(".idp").val($(".a").text());
+            }
+
+            var count = $("#totalItem").val();
+            updatePrice(count);
+        }
+
+        function updatePrice(tot) {
+
+            $(".subtotal").val(0);
+            var diskon = 0;
+            if ($(".diskon").val() != "") {
+                diskon = parseInt($(".diskon").val());
+            }
+            for (var i = 1; i <= tot; i++) {
+                if ($(".total" + i).val() != undefined) {
+                    $(".subtotal").val(parseInt($(".subtotal").val()) + parseInt($(".total" + i).val()));
                 }
             }
-
+            var befDis = $(".subtotal").val();
+            diskon = parseInt($(".subtotal").val()) * diskon / 100;
+            $(".subtotal").val(parseInt($(".subtotal").val()) - diskon);
+            var ppn = $(".ppn").val();
+            if (ppn == "ya") {
+                ppn = parseInt(befDis) * 10 / 100;
+            } else {
+                ppn = parseInt(0);
+            }
+            $(".ppnval").val(ppn);
+            $(".diskonval").val(diskon);
+            $(".befDis").val(parseInt($(".subtotal").val()));
+            $(".subtotal").val(parseInt($(".subtotal").val()) + ppn);
         }
 
-    });
-</script>
+        $('.formsub').submit(function (event) {
+            tot = $("#totalItem").val();
+            for (var i = 1; i <= tot; i++) {
+                if (typeof $(".qty" + i).val() === 'undefined') {
+                } else {
+                    if ($(".qty" + i).val() == 0) {
+                        event.preventDefault();
+                        $(".qty" + i).focus();
+                    }
+                }
+
+            }
+
+        });
+    </script>
 @endsection

@@ -41,8 +41,14 @@ Route::group(['middleware' => 'auth'], function() {
   //route surat jalan
   Route::get('/suratJalan/cari','SuratJalanController@filterData');
   Route::get('/suratJalan', 'SuratJalanController@index');
-  Route::get('/suratJalan/create/{id}','SuratJalanController@create');
+  //Route::get('/suratJalan/create/{id}','SuratJalanController@create');
   Route::post('/suratJalan/store/{id}','SuratJalanController@store');
+  Route::get('/suratJalan/create','SuratJalanController@createByCust');
+  Route::get('/suratJalan/searchsobycustid/{id}','SuratJalanController@searchSOByCustId');
+  Route::get('/suratJalan/createbasedso/{id}','SuratJalanController@createBasedSO');
+
+
+
   Route::get('/suratJalan/show/{id}','SuratJalanController@show');
   Route::get('/suratJalan/view/{id}','SuratJalanController@view');
   Route::get('/suratJalan/print/{id}','SuratJalanController@print');
@@ -160,5 +166,6 @@ Route::group(['middleware' => 'auth'], function() {
   Route::get('/pelunasanpiutang/payment/{id}/add','PelunasanController@addpayment');
   Route::post('/pelunasanpiutang/payment/{id}/add','PelunasanController@addpaymentpost');
     Route::get('stok', 'KartuStokController@api')->name('stok');
+
 
 });

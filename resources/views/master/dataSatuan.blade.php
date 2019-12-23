@@ -29,7 +29,8 @@
                             <tr>
                                 <th>Kode Satuan</th>
                                 <th>Nama Satuan</th>
-                                <th>Kemasan</th>
+                                <th>Nama Kemasan</th>
+                                <th>Jumlah Satuan dalam Kemasan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -38,7 +39,8 @@
                             <tr>
                                 <td>{{$sat->KodeSatuan}}</td>
                                 <td>{{$sat->NamaSatuan}}</td>
-                                <td>{{ $sat->Kemasan }}</td>
+                                <td>{{$sat->NamaKemasan}}</td>
+                                <td>{{$sat->JumlahSatuan}}</td>
                                 <td>
                                     <a href="{{ route('datasatuan.edit', $sat->KodeSatuan)}}" class="btn btn-warning">
                                         <i class="fa fa-pencil" aria-hidden="true"></i>Edit

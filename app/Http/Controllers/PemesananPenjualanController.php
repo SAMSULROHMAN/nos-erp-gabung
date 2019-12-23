@@ -57,12 +57,13 @@ class PemesananPenjualanController extends Controller
         $matauang = DB::table('matauangs')->get();
         $lokasi = DB::table('lokasis')->get();
         $pelanggan = DB::table('pelanggans')->get();
-        $item = DB::select("SELECT s.KodeItem, s.NamaItem, k.HargaJual, t.NamaSatuan, s.Keterangan FROM items s
-            inner join itemkonversis k on k.KodeItem = s.KodeItem
-            inner join satuans t on k.KodeSatuan = t.KodeSatuan where s.jenisitem='bahanbaku' ");
+        $item = DB::select("SELECT s.KodeItem, s.NamaItem, t.JumlahSatuan, t.NamaKemasan, k.HargaJual, t.NamaSatuan, s.Keterangan FROM items s
+              inner join itemkonversis k on k.KodeItem = s.KodeItem
+              inner join satuans t on k.KodeSatuan = t.KodeSatuan where s.jenisitem='bahanbaku' ");
         $last_id = DB::select('SELECT * FROM pemesananpenjualans ORDER BY KodeSO DESC LIMIT 1');
 
-        $year_now = date('y');
+
+      $year_now = date('y');
         $month_now = date('m');
         $date_now = date('d');
 

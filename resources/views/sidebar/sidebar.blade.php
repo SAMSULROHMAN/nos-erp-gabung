@@ -25,7 +25,7 @@
             </li>
                     <li><a>Surat jalan<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ url('/suratJalan/create/0') }}">Buat Surat Jalan </a></li>
+                            <li><a href="{{ url('/suratJalan/create') }}">Buat Surat Jalan </a></li>
                             <li><a href="{{ url('/suratJalan') }}">Surat Jalan </a></li>
                             <li><a href="{{ url('/konfirmasisuratJalan') }}">Konfirmasi Surat jalan</a></li>
                         </ul>

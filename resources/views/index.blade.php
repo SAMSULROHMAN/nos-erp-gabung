@@ -10,6 +10,7 @@
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
   <title>NOS-ERP</title>
+  <script src="{{ asset('vendors/jquery/dist/jquery.js')}}"></script>
 
   <!-- Bootstrap -->
   <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -101,7 +102,6 @@
     <div class="clearfix"></div>
   </footer>
 
-  <script src="{{ asset('vendors/jquery/dist/jquery.js')}}"></script>
   <script src="{{ asset('js/datatables.min.js')}}"></script>
   <script src="{{ asset('vendors/select2/dist/js/select2.min.js')}}" charset="utf-8"></script>
   <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
