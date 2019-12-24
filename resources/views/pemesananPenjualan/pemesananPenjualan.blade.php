@@ -6,10 +6,16 @@
 
           <div class="x_panel">
               <div class="x_title">
-                <h3>Filter Tanggal</h3>
+                <h3>Filter</h3>
               </div>
               <form action="{{ url('/sopenjualan/cari')}}" method="get">
                 <div class="x_content">
+                  <div class="col-md-8 col-sm-8">
+                    <div class="form-group">
+                      <label>Cari:</label>
+                      <input type="text" class="form-control" name="name" value="{{Request::get('name')}}" placeholder="Nomer SO/ Nama Customer"/>
+                    </div>
+                  </div>
                   <div class="col-md-5 col-sm-5">
                     <div class="form-group">
                         <label for="tanggalpo">Dari :</label>
@@ -107,7 +113,6 @@
 
 <script type="text/javascript">
     $('#tanggalpo').datetimepicker({
-      defaultDate: new Date(),
       format: 'YYYY-MM-DD'
     });
 

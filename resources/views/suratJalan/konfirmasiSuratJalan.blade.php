@@ -3,10 +3,16 @@
 <div class="container">
     <div class="x_panel">
         <div class="x_title">
-            <h3>Filter Tanggal</h3>
+            <h3>Filter Keyword dan Tanggal</h3>
         </div>
         <form action="{{ url('/konfirmasisuratJalan/cari')}}" method="get">
             <div class="x_content">
+                <div class="col-md-8 col-sm-8">
+                    <div class="form-group">
+                        <label for="tanggalpo">Cari:</label>
+                        <input type="text" class="form-control" name="name" value="{{Request::get('name')}}" placeholder="Nomer SO/SJ/ Nama Customer"/>
+                    </div>
+                </div>
                 <div class="col-md-5 col-sm-5">
                     <div class="form-group">
                         <label for="tanggalpo">Dari :</label>
@@ -59,7 +65,7 @@
                     @foreach ($suratjalans as $suratjalan)
                     <tr>
                         <td>{{ $suratjalan->KodeSO}}</td>
-                        <td>{{ $suratjalan->KodePelanggan}}</td>
+                        <td>{{ $suratjalan->NamaPelanggan}}</td>
                         <td>{{ \Carbon\Carbon::parse($suratjalan->Tanggal)->format('d-m-Y') }}</td>
                         <td>{{ $suratjalan->KodeLokasi}}</td>
                         <td>
@@ -78,7 +84,6 @@
 @section('scripts')
 <script type="text/javascript">
     $('#start').datetimepicker({
-        defaultDate: new Date(),
         format: 'YYYY-DD-MM'
     });
 
