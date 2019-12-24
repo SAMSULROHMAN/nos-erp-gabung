@@ -34,15 +34,21 @@ class PemesananPenjualanController extends Controller
 
     public function filterData(Request $request)
     {
-        $mulai = $request->get('mulai');
-        $sampai = $request->get('sampai');
-        //dd($mulai,$sampai);
-        // $tanggal = '2019-09-13 00:00:00';
-        $hasil1 = pemesananpenjualan::where('Status','OPN')->get();
-        $pemesananpenjualan = $hasil1->whereBetween('Tanggal',[$mulai.' 00:00:00',$sampai.' 00:00:00']);
+      $search = $request->get('name');
+      $start = $request->get('mulai');
+      $end = $request->get('sampai');
+      $pemesananpenjualan = pemesananpenjualan::join('pelanggans', 'pelanggans.KodePelanggan', '=', 'pemesananpenjualans.KodePelanggan')
+        ->Where('pemesananpenjualans.Status','OPN')
+        ->Where(function($query) use ($search){
+          $query->Where('pelanggans.NamaPelanggan','LIKE',"%$search%")
+            ->orWhere('pemesananpenjualans.KodeSO','LIKE',"%$search%");
+        })->get();
+      if($start && $end){
+        $pemesananpenjualan = $pemesananpenjualan->whereBetween('Tanggal', [$start . ' 00:00:00', $end . ' 00:00:00']);
+      }else{
         $pemesananpenjualan->all();
-        //return $pemesananpenjualan;
-        return view('pemesananPenjualan.pemesananPenjualan',compact('pemesananpenjualan','mulai','sampai'));
+      }
+      return view('pemesananPenjualan.pemesananPenjualan', compact('pemesananpenjualan', 'mulai', 'sampai'));
 
     }
 
